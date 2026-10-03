@@ -1,0 +1,10 @@
+# Copies of earlier labs, kept locally for reference only
+PreviousLabs/
+
+# Environment and tool caches
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+
+# data/dataset_phishing.csv IS committed on purpose: it is small (3.7 MB) and
+# CC BY 4.0 allows redistribution with credit (see data/README.md).
