@@ -337,3 +337,25 @@ Notebook ran without errors twice (466 s and 458 s), with identical numbers. `to
 --no-execute` finds D2 in the new notebook. My first guess was that near-zero features reshuffle
 and lower the correlation; the split showed the opposite (they prop it up), and the text follows
 the data.
+
+## 2026-10-05 01:51 EEST: F2, SHAP additivity check (and extra X6)
+
+**What**
+- `parts/30_explanations.ipynb`: added step F2 and extra X6 (now 15 cells, saved with outputs):
+  - F2: base value + SHAP sum vs. `predict_proba` for 5 flows (2 attacks, 3 benign), with an
+    assert at 0.001, and a column showing the lab's sigmoid hint is wrong for the forest
+  - written findings and the "Check yourself" answer
+  - a `# STANDIN E1` cell that loads `models/gb.joblib`
+  - X6: the same check for gradient boosting, in log-odds, matching only after the sigmoid
+- `results/tables/F2_additivity.csv`, `results/tables/X6_gb_additivity.csv`: written by the notebook
+- `TASKLIST.md`: F2 and X6 ticked, with results
+
+**Why**
+Lab step F2. X6 was added because it shows in a few seconds when the lab's sigmoid hint applies
+(gradient boosting) and when it does not (the forest), which is the core of the F2 answer.
+
+**Verified**
+Notebook ran without errors (482 s, mostly D2's SHAP). Both asserts pass: forest difference
+4.4e-16 without a sigmoid; gradient boosting difference < 0.001 only after the sigmoid.
+`tools/assemble.py --no-execute` finds F2 and X6. Two numbers in the write-up were corrected
+against the output (sigmoid range 0.50–0.73).

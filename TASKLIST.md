@@ -310,7 +310,7 @@ start as soon as the setup notebook is on `main`.
 | ID | Task | What it is and why | Needs | Done |
 |---|---|---|---|---|
 | F1 | Deletion test, alone and in groups | Top-k vs. random-k (fidelity); single vs. group (redundancy) | T3 | ☐ |
-| F2 | Do the SHAP numbers add up? | Base value + SHAP values = model output, for 5 flows | T3 | ☐ |
+| F2 | Do the SHAP numbers add up? | Base value + SHAP values = model output, for 5 flows | T3 | ☑ |
 | F3 | How well does LIME fit? | LIME's R² on 20 flows; which flows fit worst | T3 | ☐ |
 
 ### Optional extras
@@ -322,7 +322,7 @@ start as soon as the setup notebook is on `main`.
 | X3 | Attack success vs. budget | Constrained success rate for 1, 3, 5, 10 steps | C2 | ☐ |
 | X4 | Transfer attack | Rows crafted against the forest, scored by the tree, logreg and ensemble | C2, E1 | ☐ |
 | X5 | LIME stability | LIME 5 times with 5 seeds on the same flow: how often is the top 3 the same? | F3 | ☐ |
-| X6 | F2 for gradient boosting | Shows when the sigmoid is (and is not) needed | F2, E1 | ☐ |
+| X6 | F2 for gradient boosting | Shows when the sigmoid is (and is not) needed | F2, E1 | ☑ |
 
 ### Report and hand-in
 
@@ -1038,13 +1038,20 @@ actually are, and in what unit.
 The PDF's "TreeSHAP returns log-odds" holds for gradient boosting, not for a scikit-learn forest.
 Applying the sigmoid to the forest's numbers makes the check fail.
 
-- [ ] For any 5 test flows: print base value, sum of the class-1 SHAP values, their total, and
+- [x] For any 5 test flows: print base value, sum of the class-1 SHAP values, their total, and
       `rf.predict_proba` for class 1. `assert` they agree within 0.001.
-- [ ] Markdown: explain why no sigmoid was needed for the forest (and point to X6 if done). If the
+- [x] Markdown: explain why no sigmoid was needed for the forest (and point to X6 if done). If the
       totals did not agree, what would that say about the explainer?
 
 **Done when:** the 5-row table prints and the assertion passes.
 **Goes into the report:** Results (one sentence, or a 5-row table).
+
+**Result (2026-10-05, `parts/30_explanations.ipynb`):** `results/tables/F2_additivity.csv`. Five
+flows (first 2 attacks and first 3 benign of `EXPLAIN_IDX`). Base value 0.1507 (the attack rate) +
+SHAP sum = `predict_proba` to within 5e-16, **without** a sigmoid; the lab's sigmoid would give
+0.50–0.73. X6 done as well (`results/tables/X6_gb_additivity.csv`): for gradient boosting the totals
+are log-odds (base −5.61) and match only after the sigmoid. The notebook has a `# STANDIN E1` cell
+that loads `models/gb.joblib`.
 
 #### F3 · How well does LIME fit?
 
@@ -1080,7 +1087,7 @@ Below R² 0.70 the explanation should not be trusted much.
 | X3 | Constrained attack success rate with 1, 3, 5, 10 steps; plot | Track 2 |
 | X4 | Score the 50 rows crafted against `rf` with `tree`, `logreg` and `ensemble` (does evasion transfer?) | Track 2 |
 | X5 | LIME 5 times with seeds 0–4 on the same flow; count how often the top-3 is the same. SHAP gives the same answer every time | Track 3 |
-| X6 | F2 for `gb`: show the totals only match after the sigmoid | Track 3 |
+| X6 | F2 for `gb`: show the totals only match after the sigmoid | Track 3. ☑ Done: log-odds, match only after the sigmoid. `results/tables/X6_gb_additivity.csv` |
 
 ---
 
