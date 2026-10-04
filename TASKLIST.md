@@ -262,7 +262,7 @@ start as soon as the setup notebook is on `main`.
 | ID | Task | What it is and why | Needs | Done |
 |---|---|---|---|---|
 | T1 | Kickoff | Agree on sections 1.3 and 2, pick tracks, create branches. After this, nobody waits for anybody | – | ☐ |
-| T2 | Environment, data, assembly script | Everyone can install the same libraries and has `clean.csv`; `assemble.py` knows this lab's step order | T1 | ☐ |
+| T2 | Environment, data, assembly script | Everyone can install the same libraries and has `clean.csv`; `assemble.py` knows this lab's step order | T1 | ☑ (local machine; teammates still create their own `.venv`) |
 | T3 | Setup notebook (step A0) | Load, split, train and cache the three models, build every shared name in section 2.3 | T2 | ☐ |
 | T4 | Feature-name cheat sheet | One table: our 68 names, what each measures in plain words, its group from C1. Helps everyone read results | T2 | ☐ |
 
@@ -440,20 +440,20 @@ appear), **What to do** (tick the boxes), **Pitfalls**, **Done when**, and **Goe
 **Why:** Everyone must run the same code with the same library versions, or the numbers will not
 match at sync 3, and "the notebook reproduces your numbers" is 30% of the grade.
 
-- [ ] Create the environment:
+- [x] Create the environment:
       ```bash
       uv venv --python 3.13 .venv
       source .venv/bin/activate
       uv pip install -r requirements.txt
       ```
       (No `uv`? `curl -LsSf https://astral.sh/uv/install.sh | sh`, then open a new terminal.)
-- [ ] Check that `clean.csv` is the right file: `sha256sum data/processed/clean.csv` must print the
+- [x] Check that `clean.csv` is the right file: `sha256sum data/processed/clean.csv` must print the
       hash in `data/README.md`.
-- [ ] Edit `tools/assemble.py`:
+- [x] Edit `tools/assemble.py`:
   - `OUTPUT` → `lab4_2_robustness_attacks.ipynb`
   - `STEP_ORDER` → `["A0", "A1", "A2", "B1", "B2", "C1", "C2", "C3", "D1", "D2", "E1", "E2", "F1", "F2", "F3"] + [f"X{i}" for i in range(1, 7)]`
   - `TITLE` → Lab 4.2 title, group members, one-paragraph summary.
-- [ ] Test the script on a tiny dummy notebook in `parts/` with `python tools/assemble.py --no-execute`, then delete the dummy.
+- [x] Test the script on a tiny dummy notebook in `parts/` with `python tools/assemble.py --no-execute`, then delete the dummy.
 
 **Pitfalls:** A `ModuleNotFoundError` almost always means the virtual environment is not active
 (`source .venv/bin/activate` in every new terminal).

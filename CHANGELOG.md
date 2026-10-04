@@ -32,3 +32,23 @@ Rebuilt the split from `clean.csv` with Lab 1's code: the row indices and values
 `splits.joblib` exactly (267,984 / 89,328 / 89,329 rows). Checked that the feature-group rules give
 25 Free / 5 Costly / 38 Fixed features. Checked with shap 0.52 that the forest's SHAP values add up
 to the probability, while gradient boosting's add up to log-odds.
+
+## 2026-10-04 13:48 EEST: T2, environment and assembly script
+
+**What**
+- `.venv/`: created with Python 3.13.7 and `requirements.txt` installed (scikit-learn 1.6.1,
+  shap 0.52.0, lime 0.2.0.1, numpy 2.5.3, pandas 3.0.6, scipy 1.18.1, Jupyter, nbformat, nbconvert)
+- `tools/assemble.py`: output file is now `lab4_2_robustness_attacks.ipynb`; step order is
+  A0, A1, A2, B1, B2, C1-C3, D1, D2, E1, E2, F1-F3, then X1-X6; Lab 4.2 title cell; error and
+  help messages name steps A0-F3
+- `TASKLIST.md`: T2 checkboxes ticked; overview row marked done for this machine
+
+**Why**
+Task T2: everyone needs the same library versions, and the assembly script must sort this lab's
+steps. The title keeps the Lab 4.1 group members; this has not been confirmed for this lab.
+
+**Verified**
+All libraries import with the pinned versions. `clean.csv` matches the SHA-256 in
+`data/README.md`. On two throwaway notebooks in a temporary folder, the script put the cells in
+lab order (A0, C2, F1), dropped the STANDIN cell, listed the missing steps, and ran the result top
+to bottom. The test folder was then deleted, so `parts/` holds only `.gitkeep`.
