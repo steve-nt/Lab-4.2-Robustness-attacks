@@ -1,0 +1,69 @@
+feature,group,rule,step_size,train_median
+Flow Duration,Free,timing: the attacker can wait longer,1.842e+07,7.649e+04
+Total Fwd Packets,Costly,"forward count: more packets, a louder attack",363.5,2
+Total Backward Packets,Fixed,backward direction: produced by the victim,,2
+Total Length of Fwd Packets,Costly,"forward count: more packets, a louder attack",3134,74
+Total Length of Bwd Packets,Fixed,backward direction: produced by the victim,,190
+Fwd Packet Length Max,Free,forward size: the attacker can pad packets,399.5,44
+Fwd Packet Length Min,Free,forward size: the attacker can pad packets,32.07,6
+Fwd Packet Length Mean,Free,forward size: the attacker can pad packets,101.8,40
+Fwd Packet Length Std,Free,forward size: the attacker can pad packets,155.6,0
+Bwd Packet Length Max,Fixed,backward direction: produced by the victim,,114
+Bwd Packet Length Min,Fixed,backward direction: produced by the victim,,0
+Bwd Packet Length Mean,Fixed,backward direction: produced by the victim,,103
+Bwd Packet Length Std,Fixed,backward direction: produced by the victim,,0
+Flow Bytes/s,Fixed,unsure (mixes both directions or is derived): Fixed to be safe,,2895
+Flow Packets/s,Fixed,unsure (mixes both directions or is derived): Fixed to be safe,,53.74
+Flow IAT Mean,Free,timing: the attacker can wait longer,2.455e+06,3.058e+04
+Flow IAT Std,Free,timing: the attacker can wait longer,4.434e+06,1.799e+04
+Flow IAT Max,Free,timing: the attacker can wait longer,1.346e+07,6.125e+04
+Flow IAT Min,Free,timing: the attacker can wait longer,1.584e+06,4
+Fwd IAT Total,Free,timing: the attacker can wait longer,1.84e+07,710
+Fwd IAT Mean,Free,timing: the attacker can wait longer,5.262e+06,375.5
+Fwd IAT Std,Free,timing: the attacker can wait longer,5.337e+06,0
+Fwd IAT Max,Free,timing: the attacker can wait longer,1.351e+07,632.5
+Fwd IAT Min,Free,timing: the attacker can wait longer,4.774e+06,3
+Bwd IAT Total,Fixed,backward direction: produced by the victim,,4
+Bwd IAT Mean,Fixed,backward direction: produced by the victim,,4
+Bwd IAT Std,Fixed,backward direction: produced by the victim,,0
+Bwd IAT Max,Fixed,backward direction: produced by the victim,,4
+Bwd IAT Min,Fixed,backward direction: produced by the victim,,3
+Fwd PSH Flags,Fixed,flag: set by the network stack / responder,,0
+Fwd URG Flags,Fixed,flag: set by the network stack / responder,,0
+Fwd Header Length,Free,forward size: the attacker can pad packets,8.139e+04,64
+Bwd Header Length,Fixed,backward direction: produced by the victim,,64
+Fwd Packets/s,Fixed,unsure (mixes both directions or is derived): Fixed to be safe,,27.49
+Bwd Packets/s,Fixed,backward direction: produced by the victim,,16.34
+Min Packet Length,Fixed,unsure (mixes both directions or is derived): Fixed to be safe,,6
+Max Packet Length,Fixed,unsure (mixes both directions or is derived): Fixed to be safe,,120
+Packet Length Mean,Fixed,unsure (mixes both directions or is derived): Fixed to be safe,,70.33
+Packet Length Std,Fixed,unsure (mixes both directions or is derived): Fixed to be safe,,40.99
+Packet Length Variance,Fixed,unsure (mixes both directions or is derived): Fixed to be safe,,1680
+FIN Flag Count,Fixed,flag: set by the network stack / responder,,0
+SYN Flag Count,Fixed,flag: set by the network stack / responder,,0
+RST Flag Count,Fixed,flag: set by the network stack / responder,,0
+PSH Flag Count,Fixed,flag: set by the network stack / responder,,0
+ACK Flag Count,Fixed,flag: set by the network stack / responder,,0
+URG Flag Count,Fixed,flag: set by the network stack / responder,,0
+CWE Flag Count,Fixed,flag: set by the network stack / responder,,0
+ECE Flag Count,Fixed,flag: set by the network stack / responder,,0
+Down/Up Ratio,Fixed,unsure (mixes both directions or is derived): Fixed to be safe,,1
+Average Packet Size,Fixed,unsure (mixes both directions or is derived): Fixed to be safe,,89.68
+Avg Fwd Segment Size,Free,forward size: the attacker can pad packets,101.8,40
+Avg Bwd Segment Size,Fixed,backward direction: produced by the victim,,103
+Subflow Fwd Packets,Costly,"forward count: more packets, a louder attack",363.5,2
+Subflow Fwd Bytes,Costly,"forward count: more packets, a louder attack",3134,74
+Subflow Bwd Packets,Fixed,backward direction: produced by the victim,,2
+Subflow Bwd Bytes,Fixed,backward direction: produced by the victim,,190
+Init_Win_bytes_forward,Fixed,unsure (mixes both directions or is derived): Fixed to be safe,,235
+Init_Win_bytes_backward,Fixed,backward direction: produced by the victim,,-1
+act_data_pkt_fwd,Costly,"forward count: more packets, a louder attack",344.4,1
+min_seg_size_forward,Free,forward size: the attacker can pad packets,8.102e+04,20
+Active Mean,Free,timing: the attacker can wait longer,3.473e+05,0
+Active Std,Free,timing: the attacker can wait longer,2.236e+05,0
+Active Max,Free,timing: the attacker can wait longer,5.589e+05,0
+Active Min,Free,timing: the attacker can wait longer,3.057e+05,0
+Idle Mean,Free,timing: the attacker can wait longer,1.304e+07,0
+Idle Std,Free,timing: the attacker can wait longer,2.566e+06,0
+Idle Max,Free,timing: the attacker can wait longer,1.344e+07,0
+Idle Min,Free,timing: the attacker can wait longer,1.291e+07,0

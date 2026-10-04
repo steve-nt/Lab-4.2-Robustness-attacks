@@ -286,7 +286,7 @@ start as soon as the setup notebook is on `main`.
 
 | ID | Task | What it is and why | Needs | Done |
 |---|---|---|---|---|
-| C1 | Sort the features, set the budget | `GROUP`, `can_change`, step size 0.5 × std, at most 5 changes | T3 | ☐ |
+| C1 | Sort the features, set the budget | `GROUP`, `can_change`, step size 0.5 × std, at most 5 changes | T3 | ☑ |
 | C2 | Run the attack twice | Greedy attack on `ATTACK_IDX`, constrained and unconstrained, side by side | C1 | ☐ |
 | C3 | See what the attack touched | Top-10 most changed features and their groups; no Fixed feature may appear | C2 | ☐ |
 
@@ -706,13 +706,13 @@ replies. An attack that may change anything shows a risk that does not exist.
 Checked on 2026-10-04: these rules give **25 Free, 5 Costly, 38 Fixed**. Destination port and protocol
 are not in our data (section 1.2).
 
-- [ ] Build `GROUP` with **name-pattern rules in code**, not by hand (the lab asks for this); the
+- [x] Build `GROUP` with **name-pattern rules in code**, not by hand (the lab asks for this); the
       `Bwd`/`Backward` check must come before the `IAT` check, or `Bwd IAT Mean` ends up Free.
-- [ ] Print the count per group and the full lists; save `results/tables/C1_feature_groups.csv`.
-- [ ] `can_change(feature, old_value, new_value)`: `True` only if `GROUP[feature]` is Free or Costly
+- [x] Print the count per group and the full lists; save `results/tables/C1_feature_groups.csv`.
+- [x] `can_change(feature, old_value, new_value)`: `True` only if `GROUP[feature]` is Free or Costly
       **and** `new_value >= old_value`.
-- [ ] Budget constants: `STEP_SIZE = 0.5 * TRAIN_STD` (per feature), `MAX_CHANGES = 5`.
-- [ ] Markdown: one sentence per group explaining why (from the PDF's section 3.4).
+- [x] Budget constants: `STEP_SIZE = 0.5 * TRAIN_STD` (per feature), `MAX_CHANGES = 5`.
+- [x] Markdown: one sentence per group explaining why (from the PDF's section 3.4).
 
 **Pitfalls:** The rate features (`Flow Bytes/s` …) are computed from duration and bytes. In reality,
 waiting longer *lowers* them, but our attack moves features one at a time. Note this as a limitation
@@ -722,6 +722,19 @@ in the report. The same holds for twins (T4): when the attacker raises `Total Fw
 **Done when:** `GROUP` covers all 68 features and `can_change` returns `False` for every Fixed feature
 (test it with an `assert` over all Fixed features).
 **Goes into the report:** Setup (the group table, shortened).
+
+**Result (2026-10-04, `parts/20_attack.ipynb`):** `results/tables/C1_feature_groups.csv` (feature,
+group, the rule that decided it, step size, training median). The rules give **25 Free, 5 Costly,
+38 Fixed**; 11 of the Fixed are Fixed only because we were unsure (mixed-direction sizes, derived
+rates, `Init_Win_bytes_forward`, which is the first candidate to move to Costly if C2 evades nothing).
+`can_change` passes its tests over all 68 features. Shared names made here: `GROUP`, `GROUP_RULE`,
+`can_change`, `STEP_SIZE`, `MAX_CHANGES`, `CHANGEABLE` (the 30 Free + Costly features).
+
+> **Note for C2:** the steps are large because the std is outlier-inflated (B1): +4.8 s on
+> `Fwd IAT Min`, +18 s flow duration, +13 s idle, about +360 packets. Two Free steps are physically
+> impossible: `min_seg_size_forward` +81,022 bytes (real values 0–60) and `Fwd Header Length` +81,388
+> bytes. The lab's budget is kept as written. In C2, report whether successful evasions used these two
+> features, and optionally re-run with new values capped at the training maximum as a check.
 
 #### C2 · Run the attack, twice
 

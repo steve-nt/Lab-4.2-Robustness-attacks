@@ -180,3 +180,29 @@ the mistake with the Part C heading, and was replaced by the rebuild.
 The diff against 4cff7c5 contains only the intended ticks and result notes (70 lines added,
 23 changed). Each of "## Task overview", "## 3. Tasks in detail" and the A1, A2, B1, B2, C1, T7
 headings now occurs exactly once (1,042 lines).
+
+## 2026-10-04 15:49 EEST: C1, feature groups and attack budget
+
+**What**
+- `parts/20_attack.ipynb`: created (Track 2 notebook), saved with outputs. Cell 1 is
+  `# STANDIN A0`. Step C1 contains:
+  - `assign_group()`: name rules in order (backward/flag → Fixed; timing → Free; forward sizes →
+    Free; forward counts → Costly; otherwise Fixed), giving `GROUP` and `GROUP_RULE`
+  - `can_change(feature, old, new)` with tests over all 68 features
+  - `STEP_SIZE = 0.5 * TRAIN_STD`, `MAX_CHANGES = 5`, `CHANGEABLE`
+  - a table of what one step means in real units, with a written note on the two physically
+    impossible Free steps
+- `results/tables/C1_feature_groups.csv`: written by the notebook
+- `TASKLIST.md`: C1 ticked, with its result and a note for C2
+
+**Why**
+Lab step C1. The step-size table was added because B1 showed that the training stds are inflated
+by outliers. With the lab's budget, `min_seg_size_forward` and `Fwd Header Length` get steps of
+about 81,000 bytes, which no real flow can do. The lab's rule is kept unchanged so C2 follows the
+lab, and the issue is handed to C2 to check and report.
+
+**Verified**
+Notebook ran without errors in 96 s. Asserts pass: groups 25 Free / 5 Costly / 38 Fixed;
+`can_change` is False for every Fixed feature and for any decrease, and True for increases of Free
+and Costly features. The first run labelled `Total Length of Fwd Packets` as "packets" in the
+units column; fixed to "bytes" and re-run.
