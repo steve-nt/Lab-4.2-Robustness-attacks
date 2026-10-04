@@ -1,0 +1,28 @@
+# Lab 4.2 environment. Tested with Python 3.13 (3.11-3.13 expected to work).
+# Same versions as our Lab 4.1 and Lab 3 environments, where they are known to work together.
+#
+# Install:
+#   uv venv --python 3.13 .venv
+#   source .venv/bin/activate
+#   uv pip install -r requirements.txt
+#
+# In Colab only shap and lime are missing; the notebook's first cell installs them.
+scikit-learn==1.6.1
+shap==0.52.0
+lime==0.2.0.1
+numpy==2.5.3
+pandas==3.0.6
+scipy==1.18.1
+matplotlib==3.11.2
+joblib==1.6.0
+threadpoolctl==3.7.0
+
+# Notebooks, and tools/assemble.py (reads and executes them)
+jupyter==1.1.1
+ipykernel==7.3.0
+nbformat==5.11.1
+nbconvert==7.17.1
+
+# Building the report PDF (report/build_report.py); not needed to run the notebook
+fpdf2==2.8.8
+markdown==3.11

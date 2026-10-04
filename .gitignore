@@ -6,5 +6,10 @@ PreviousLabs/
 __pycache__/
 .ipynb_checkpoints/
 
-# data/dataset_phishing.csv IS committed on purpose: it is small (3.7 MB) and
-# CC BY 4.0 allows redistribution with credit (see data/README.md).
+# Data: clean.csv is 150 MB (over GitHub's 100 MB limit) and the raw CICIDS2017 day-files are
+# 844 MB, so neither is committed. data/README.md says where to get them.
+data/processed/*.csv
+data/raw/*.csv
+
+# Cached trained models (rebuilt by the setup notebook)
+models/*.joblib
