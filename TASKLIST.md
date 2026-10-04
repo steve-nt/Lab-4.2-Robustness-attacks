@@ -302,7 +302,7 @@ start as soon as the setup notebook is on `main`.
 
 | ID | Task | What it is and why | Needs | Done |
 |---|---|---|---|---|
-| E1 | Ensemble | Gradient boosting + forest + logreg averaged; compare with the forest on clean, noise, missing, attack | T3 (B1, B2, C2 for the final table) | ☐ |
+| E1 | Ensemble | Gradient boosting + forest + logreg averaged; compare with the forest on clean, noise, missing, attack | T3 (B1, B2, C2 for the final table) | ☑ |
 | E2 | Drop one feature vs. a whole group | Single-feature removal looks free, group removal does not: measures redundancy | T3 | ☐ |
 
 ### Part F: are the explanations honest?
@@ -912,14 +912,14 @@ class AvgEnsemble:
 
 With `predict_proba` and `predict` it works with `report()` and `greedy_attack()` unchanged.
 
-- [ ] `gb = GradientBoostingClassifier(n_estimators=200, max_depth=4, random_state=42)`. Training on
+- [x] `gb = GradientBoostingClassifier(n_estimators=200, max_depth=4, random_state=42)`. Training on
       all 268k rows takes a long time; train on a stratified 100,000-row subsample of `X_train`
       (seed 42), **say so in the report** (the lab allows it), and cache it in `models/`.
-- [ ] `ensemble = AvgEnsemble([rf, gb, logreg])`.
-- [ ] Compare `rf` and `ensemble` on four things: clean test, 5% noise, 10% missing (`report()`), and
+- [x] `ensemble = AvgEnsemble([rf, gb, logreg])`.
+- [x] Compare `rf` and `ensemble` on four things: clean test, 5% noise, 10% missing (`report()`), and
       the constrained attack on `ATTACK_IDX` (evaded out of 50, mean probability after). Save
       `results/tables/E1_ensemble.csv`.
-- [ ] Markdown: did the ensemble help more against noise or against the attack, and why might those
+- [x] Markdown: did the ensemble help more against noise or against the attack, and why might those
       differ? Is running three models affordable in an IDS that must answer in milliseconds?
 
 **Pitfalls:** For the attack row, attack the **ensemble itself** (the attacker probes the deployed
@@ -927,6 +927,28 @@ system). Stand-ins for `add_noise`, `add_missing` and `greedy_attack` are fine u
 
 **Done when:** the four-row comparison exists for both models.
 **Goes into the report:** Results (ensemble table).
+
+**Result (2026-10-04, `parts/20_attack.ipynb`):** `results/tables/E1_ensemble.csv` (plus
+`E1_scores_all.csv`, `E1_ensemble_attack_per_flow.csv`, `E1_latency.csv`). Gradient boosting trained
+on a stratified 100,000-row subsample in about 7.5 minutes, cached as `models/gb.joblib`.
+
+| | Forest | Ensemble |
+|---|---|---|
+| Clean macro-F1 / recall | 0.997 / 0.992 | 0.997 / 0.990 |
+| 5% noise macro-F1 / recall | 0.521 / 0.063 | 0.621 / 0.193 |
+| 10% missing macro-F1 / recall | 0.990 / 0.968 | 0.972 / 0.911 |
+| Constrained attack, evaded of 50 | 9 | **11** |
+
+- The ensemble helps a little under noise, entirely because of logistic regression.
+- It is *easier* to evade. On the evaded flows the forest still says 0.57–0.86, but logistic
+  regression ends near 0. It was already unsure about those flows before the attack (mean 0.46), and
+  the plain average lets that weakest member decide.
+- Latency is about 90 ms per single flow for both the forest and the ensemble (mostly parallel
+  overhead; varies by a few ms between runs), and about 20 vs. 30 µs per flow in batches.
+
+The notebook has `# STANDIN B1` / `# STANDIN B2` cells: verbatim copies of `add_noise` and
+`add_missing` from Track 1's notebook. Shared names made here: `gb`, `AvgEnsemble`, `ensemble`,
+`ensemble_attack`, `ensemble_adv`.
 
 #### E2 · Drop one feature, then drop a whole group (Track 3)
 

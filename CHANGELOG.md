@@ -282,3 +282,32 @@ Notebook ran without errors (SHAP 132–226 s). All step markers are valid, and
 `tools/assemble.py --no-execute` orders A0–D1 correctly. The generated notebook was deleted, since
 it is only built at sync 3. The figure was checked by eye. Results: SHAP top 10 all Fixed (77% of
 SHAP weight), overlap 0 with both attacker lists.
+
+## 2026-10-04 17:40 EEST: E1, ensemble of forest, gradient boosting and logistic regression
+
+**What**
+- `parts/20_attack.ipynb`: added step E1 (now 39 cells, saved with outputs):
+  - `# STANDIN B1` and `# STANDIN B2` cells: verbatim copies of `add_noise` / `add_missing` from
+    Track 1's notebook
+  - gradient boosting (200 trees, depth 4) on a stratified 100,000-row training subsample, cached
+  - `AvgEnsemble` and `ensemble` (forest + GB + logreg)
+  - scores on clean data, 5% noise and 10% missing values
+  - the constrained attack run against the ensemble itself
+  - the four-way comparison table, member probabilities on the evaded flows, a latency
+    measurement, and the written findings with both "Check yourself" answers
+- `models/gb.joblib`: trained (not in git)
+- `results/tables/E1_ensemble.csv`, `E1_scores_all.csv`, `E1_ensemble_attack_per_flow.csv`,
+  `E1_latency.csv`: written by the notebook
+- `TASKLIST.md`: E1 ticked, with results
+
+**Why**
+Lab step E1. The stand-ins are verbatim copies so the numbers are identical to B1 and B2. The
+attack targets the ensemble itself because the attacker probes the deployed system. Member
+probabilities were added to explain why the ensemble is easier to evade (11/50 vs 9/50).
+
+**Verified**
+Notebook ran without errors twice (1006 s with GB training, 635 s cached), with identical scores both
+times. `tools/assemble.py --no-execute` orders A0–E1. The first write-up said logreg "dropped" to
+about 0; the second run shows it was already unsure about those flows (mean 0.46 before the attack),
+so the text was corrected. The latency numbers in the text were changed to approximate values,
+because they vary between runs (83–92 ms).
