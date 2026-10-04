@@ -1,0 +1,69 @@
+feature,meaning,unit,direction,group_proposed,distinct_values,train_min,train_median,train_max,has_negatives,twin_group,twin_members
+Flow Duration,"How long the whole conversation lasted, first packet to last",microseconds,both,Free,162315,-1.0,76490.5,119999993.0,True,1.0,"Flow Duration, Fwd IAT Total"
+Total Fwd Packets,Number of packets the initiator (client/attacker) sent,packets,forward,Costly,549,1.0,2.0,202456.0,False,2.0,"Total Fwd Packets, Total Backward Packets, Total Length of Bwd Packets, Subflow Fwd Packets, Subflow Bwd Packets, Subflow Bwd Bytes, act_data_pkt_fwd"
+Total Backward Packets,Number of packets the responder (server/victim) sent back,packets,backward,Fixed,672,0.0,2.0,272353.0,False,2.0,"Total Fwd Packets, Total Backward Packets, Total Length of Bwd Packets, Subflow Fwd Packets, Subflow Bwd Packets, Subflow Bwd Bytes, act_data_pkt_fwd"
+Total Length of Fwd Packets,Total payload bytes the initiator sent,bytes,forward,Costly,7359,0.0,74.0,1196931.0,False,3.0,"Total Length of Fwd Packets, Subflow Fwd Bytes"
+Total Length of Bwd Packets,Total payload bytes the responder sent back,bytes,backward,Fixed,17579,0.0,190.0,593000000.0,False,2.0,"Total Fwd Packets, Total Backward Packets, Total Length of Bwd Packets, Subflow Fwd Packets, Subflow Bwd Packets, Subflow Bwd Bytes, act_data_pkt_fwd"
+Fwd Packet Length Max,Largest packet payload the initiator sent,bytes,forward,Free,3209,0.0,44.0,23360.0,False,4.0,"Fwd Packet Length Max, Fwd Packet Length Std"
+Fwd Packet Length Min,Smallest packet payload the initiator sent,bytes,forward,Free,206,0.0,6.0,1983.0,False,,
+Fwd Packet Length Mean,Average packet payload the initiator sent,bytes,forward,Free,24770,0.0,40.0,5483.558824,False,5.0,"Fwd Packet Length Mean, Avg Fwd Segment Size"
+Fwd Packet Length Std,How much the initiator's packet sizes vary,bytes,forward,Free,43184,0.0,0.0,7125.5968458437,False,4.0,"Fwd Packet Length Max, Fwd Packet Length Std"
+Bwd Packet Length Max,Largest packet payload the responder sent,bytes,backward,Fixed,3514,0.0,114.0,17376.0,False,6.0,"Bwd Packet Length Max, Bwd Packet Length Mean, Bwd Packet Length Std, Avg Bwd Segment Size"
+Bwd Packet Length Min,Smallest packet payload the responder sent,bytes,backward,Fixed,425,0.0,0.0,1702.0,False,,
+Bwd Packet Length Mean,Average packet payload the responder sent,bytes,backward,Fixed,30835,0.0,103.0,5800.5,False,6.0,"Bwd Packet Length Max, Bwd Packet Length Mean, Bwd Packet Length Std, Avg Bwd Segment Size"
+Bwd Packet Length Std,How much the responder's packet sizes vary,bytes,backward,Fixed,40170,0.0,0.0,8194.660487,False,6.0,"Bwd Packet Length Max, Bwd Packet Length Mean, Bwd Packet Length Std, Avg Bwd Segment Size"
+Flow Bytes/s,Data rate of the whole conversation (bytes / duration),bytes per second,both,Fixed,212959,-12000000.0,2895.2764470825,2070000000.0,True,,
+Flow Packets/s,Packet rate of the whole conversation (packets / duration),packets per second,both,Fixed,180650,-2000000.0,53.7372945217,3000000.0,True,7.0,"Flow Packets/s, Fwd Packets/s"
+Flow IAT Mean,"Average gap between two consecutive packets, either direction",microseconds,both,Free,172522,-1.0,30575.0,119748208.0,True,,
+Flow IAT Std,How much the gaps between packets vary,microseconds,both,Free,141369,0.0,17985.32692,84800000.0,False,,
+Flow IAT Max,Longest gap between two consecutive packets,microseconds,both,Free,110197,-1.0,61249.0,120000000.0,True,8.0,"Flow IAT Max, Fwd IAT Max, Idle Mean, Idle Max, Idle Min"
+Flow IAT Min,Shortest gap between two consecutive packets (a few impossible negative values come from clock errors in the recording),microseconds,both,Free,31260,-13.0,4.0,119748208.0,True,,
+Fwd IAT Total,Sum of the gaps between the initiator's packets,microseconds,forward,Free,74958,0.0,710.0,120000000.0,False,1.0,"Flow Duration, Fwd IAT Total"
+Fwd IAT Mean,Average gap between two packets of the initiator,microseconds,forward,Free,101453,0.0,375.5,120000000.0,False,,
+Fwd IAT Std,How much the gaps between the initiator's packets vary,microseconds,forward,Free,90541,0.0,0.0,84602929.2769822,False,,
+Fwd IAT Max,Longest gap between two packets of the initiator,microseconds,forward,Free,73138,0.0,632.5,120000000.0,False,8.0,"Flow IAT Max, Fwd IAT Max, Idle Mean, Idle Max, Idle Min"
+Fwd IAT Min,Shortest gap between two packets of the initiator,microseconds,forward,Free,23688,0.0,3.0,120000000.0,False,,
+Bwd IAT Total,Sum of the gaps between the responder's packets,microseconds,backward,Fixed,65253,0.0,4.0,120000000.0,False,,
+Bwd IAT Mean,Average gap between two packets of the responder,microseconds,backward,Fixed,90356,0.0,4.0,120000000.0,False,,
+Bwd IAT Std,How much the gaps between the responder's packets vary,microseconds,backward,Fixed,85887,0.0,0.0,82900000.0,False,,
+Bwd IAT Max,Longest gap between two packets of the responder,microseconds,backward,Fixed,64442,0.0,4.0,120000000.0,False,,
+Bwd IAT Min,Shortest gap between two packets of the responder,microseconds,backward,Fixed,11890,0.0,3.0,120000000.0,False,,
+Fwd PSH Flags,"Whether the initiator set the PSH flag (""deliver this data now"")",0/1,forward,Fixed,2,0.0,0.0,1.0,False,9.0,"Fwd PSH Flags, SYN Flag Count"
+Fwd URG Flags,"Whether the initiator set the URG flag (""urgent data""); almost never used",0/1,forward,Fixed,2,0.0,0.0,1.0,False,10.0,"Fwd URG Flags, CWE Flag Count"
+Fwd Header Length,Total header bytes of the initiator's packets (negative values are a known CICFlowMeter bug),bytes,forward,Free,1362,-83885011.0,64.0,4290372.0,True,11.0,"Fwd Header Length, Bwd Header Length, min_seg_size_forward"
+Bwd Header Length,Total header bytes of the responder's packets (negative values are a known CICFlowMeter bug),bytes,backward,Fixed,1489,-83885011.0,64.0,5447060.0,True,11.0,"Fwd Header Length, Bwd Header Length, min_seg_size_forward"
+Fwd Packets/s,How fast the initiator sent packets,packets per second,forward,Fixed,179394,0.0,27.493015055,3000000.0,False,7.0,"Flow Packets/s, Fwd Packets/s"
+Bwd Packets/s,How fast the responder sent packets,packets per second,backward,Fixed,162608,0.0,16.3397358,2000000.0,False,,
+Min Packet Length,"Smallest packet payload in the conversation, either direction",bytes,both,Fixed,166,0.0,6.0,1448.0,False,,
+Max Packet Length,"Largest packet payload in the conversation, either direction",bytes,both,Fixed,4058,0.0,120.0,23360.0,False,12.0,"Max Packet Length, Packet Length Std"
+Packet Length Mean,"Average packet payload, both directions together",bytes,both,Fixed,44166,0.0,70.33333333,2920.0,False,13.0,"Packet Length Mean, Average Packet Size"
+Packet Length Std,"How much packet sizes vary, both directions together",bytes,both,Fixed,67452,0.0,40.99186911,4414.547151258,False,12.0,"Max Packet Length, Packet Length Std"
+Packet Length Variance,Packet Length Std squared (same information),bytes squared,both,Fixed,66455,0.0,1680.333333,19488226.5506803,False,,
+FIN Flag Count,"A packet with FIN (""I am finished, close the connection"") was seen",0/1,both,Fixed,2,0.0,0.0,1.0,False,,
+SYN Flag Count,"A packet with SYN (""let us start a connection"") was seen",0/1,both,Fixed,2,0.0,0.0,1.0,False,9.0,"Fwd PSH Flags, SYN Flag Count"
+RST Flag Count,"A packet with RST (""abort the connection"") was seen",0/1,both,Fixed,2,0.0,0.0,1.0,False,14.0,"RST Flag Count, ECE Flag Count"
+PSH Flag Count,"A packet with PSH (""deliver this data now"") was seen",0/1,both,Fixed,2,0.0,0.0,1.0,False,,
+ACK Flag Count,"A packet with ACK (""I received your data"") was seen",0/1,both,Fixed,2,0.0,0.0,1.0,False,,
+URG Flag Count,"A packet with URG (""urgent data"") was seen",0/1,both,Fixed,2,0.0,0.0,1.0,False,,
+CWE Flag Count,A packet with CWR (congestion window reduced) was seen,0/1,both,Fixed,2,0.0,0.0,1.0,False,10.0,"Fwd URG Flags, CWE Flag Count"
+ECE Flag Count,A packet with ECE (network congestion warning) was seen,0/1,both,Fixed,2,0.0,0.0,1.0,False,14.0,"RST Flag Count, ECE Flag Count"
+Down/Up Ratio,Responder packets divided by initiator packets (download vs. upload),ratio,both,Fixed,11,0.0,1.0,43.0,False,,
+Average Packet Size,Average packet size over the conversation,bytes,both,Fixed,42681,0.0,89.67924528,3337.142857,False,13.0,"Packet Length Mean, Average Packet Size"
+Avg Fwd Segment Size,Average data per initiator packet (practically Fwd Packet Length Mean),bytes,forward,Free,24770,0.0,40.0,5483.558824,False,5.0,"Fwd Packet Length Mean, Avg Fwd Segment Size"
+Avg Bwd Segment Size,Average data per responder packet (practically Bwd Packet Length Mean),bytes,backward,Fixed,30835,0.0,103.0,5800.5,False,6.0,"Bwd Packet Length Max, Bwd Packet Length Mean, Bwd Packet Length Std, Avg Bwd Segment Size"
+Subflow Fwd Packets,Initiator packets per sub-conversation (bursts split by idle time),packets,forward,Costly,549,1.0,2.0,202456.0,False,2.0,"Total Fwd Packets, Total Backward Packets, Total Length of Bwd Packets, Subflow Fwd Packets, Subflow Bwd Packets, Subflow Bwd Bytes, act_data_pkt_fwd"
+Subflow Fwd Bytes,Initiator bytes per sub-conversation,bytes,forward,Costly,7359,0.0,74.0,1196931.0,False,3.0,"Total Length of Fwd Packets, Subflow Fwd Bytes"
+Subflow Bwd Packets,Responder packets per sub-conversation,packets,backward,Fixed,672,0.0,2.0,272353.0,False,2.0,"Total Fwd Packets, Total Backward Packets, Total Length of Bwd Packets, Subflow Fwd Packets, Subflow Bwd Packets, Subflow Bwd Bytes, act_data_pkt_fwd"
+Subflow Bwd Bytes,Responder bytes per sub-conversation,bytes,backward,Fixed,17579,0.0,190.0,593469129.0,False,2.0,"Total Fwd Packets, Total Backward Packets, Total Length of Bwd Packets, Subflow Fwd Packets, Subflow Bwd Packets, Subflow Bwd Bytes, act_data_pkt_fwd"
+Init_Win_bytes_forward,Receive-window size in the initiator's first packet: how much data it accepts at once (-1 = not recorded),bytes,forward,Fixed,4764,-1.0,235.0,65535.0,True,,
+Init_Win_bytes_backward,"Receive-window size in the responder's first packet, set by the victim's operating system (-1 = not recorded)",bytes,backward,Fixed,4899,-1.0,-1.0,65535.0,True,,
+act_data_pkt_fwd,Initiator packets that carried at least 1 byte of data,packets,both,Costly,413,0.0,1.0,192326.0,False,2.0,"Total Fwd Packets, Total Backward Packets, Total Length of Bwd Packets, Subflow Fwd Packets, Subflow Bwd Packets, Subflow Bwd Bytes, act_data_pkt_fwd"
+min_seg_size_forward,Smallest header size seen in the initiator's packets (a few huge negative values are the same CICFlowMeter bug as the header lengths),bytes,forward,Free,17,-83885313.0,20.0,60.0,True,11.0,"Fwd Header Length, Bwd Header Length, min_seg_size_forward"
+Active Mean,Average length of a busy period (packets flowing) before the flow went quiet,microseconds,both,Free,46399,0.0,0.0,107000000.0,False,,
+Active Std,How much the busy periods vary,microseconds,both,Free,24594,0.0,0.0,74200000.0,False,,
+Active Max,Longest busy period,microseconds,both,Free,45629,0.0,0.0,107000000.0,False,,
+Active Min,Shortest busy period,microseconds,both,Free,34687,0.0,0.0,107000000.0,False,,
+Idle Mean,Average length of a quiet period between busy periods,microseconds,both,Free,28658,0.0,0.0,120000000.0,False,8.0,"Flow IAT Max, Fwd IAT Max, Idle Mean, Idle Max, Idle Min"
+Idle Std,How much the quiet periods vary,microseconds,both,Free,24296,0.0,0.0,74200000.0,False,,
+Idle Max,Longest quiet period,microseconds,both,Free,21286,0.0,0.0,120000000.0,False,8.0,"Flow IAT Max, Fwd IAT Max, Idle Mean, Idle Max, Idle Min"
+Idle Min,Shortest quiet period,microseconds,both,Free,32333,0.0,0.0,120000000.0,False,8.0,"Flow IAT Max, Fwd IAT Max, Idle Mean, Idle Max, Idle Min"

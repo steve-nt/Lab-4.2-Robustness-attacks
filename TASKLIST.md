@@ -266,7 +266,7 @@ start as soon as the setup notebook is on `main`.
 | T1 | Kickoff | Agree on sections 1.3 and 2, pick tracks, create branches. After this, nobody waits for anybody | – | ☐ |
 | T2 | Environment, data, assembly script | Everyone can install the same libraries and has `clean.csv`; `assemble.py` knows this lab's step order | T1 | ☑ (local machine; teammates still create their own `.venv`) |
 | T3 | Setup notebook (step A0) | Load, split, train and cache the three models, build every shared name in section 2.3 | T2 | ☑ (merge to `main` still to do) |
-| T4 | Feature-name cheat sheet | One table: our 68 names, what each measures in plain words, its group from C1. Helps everyone read results | T2 | ☐ |
+| T4 | Feature-name cheat sheet | One table: our 68 names, what each measures in plain words, its group from C1. Helps everyone read results | T2 | ☑ |
 
 ### Part A: the baseline
 
@@ -523,13 +523,26 @@ so expect a low constrained success rate in C2. `EXPLAIN_IDX` holds 68 attacks a
 `Init_Win_bytes_backward` means nothing. A one-page table makes every later table readable, and the
 report can use a shortened version for the feature groups.
 
-- [ ] `results/tables/T4_feature_glossary.csv` (or a Markdown table in `report/`) with columns: name,
-      plain-language meaning, unit (packets, bytes, microseconds, rate, 0/1), forward/backward/both,
-      group (fill in once C1 exists).
-- [ ] Mark the obvious twin families, e.g. `Fwd Packet Length Mean` / `Avg Fwd Segment Size`,
-      `Total Fwd Packets` / `Subflow Fwd Packets`, the four `Fwd Packet Length …` columns.
+- [x] `results/tables/T4_feature_glossary.csv` and a readable `results/tables/T4_feature_glossary.md`,
+      both written by `python tools/feature_glossary.py`: name, plain-language meaning, unit,
+      forward/backward/both, proposed group (from the C1 name rules), train min / median / max,
+      whether negatives occur, and the twin group.
+- [x] Twin families found **from the data**, not guessed: features linked by |correlation| > 0.95 on
+      the training set, directly or through a chain.
 
 **Done when:** every one of the 68 features has a one-line meaning.
+
+**Result (2026-10-04):** 68 features (20 forward, 17 backward, 31 both); the C1 name rules propose 25
+Free, 5 Costly, 38 Fixed. 11 features have negative values in training (−1 = "not recorded", plus
+CICFlowMeter bugs in the header lengths). **14 twin groups cover 39 features.** Two of them are
+**mixed**: they hold features the attacker can change *and* features they cannot:
+- group 2: `Total Fwd Packets`, `Subflow Fwd Packets`, `act_data_pkt_fwd` (Costly) with
+  `Total Backward Packets`, `Total Length of Bwd Packets`, `Subflow Bwd …` (Fixed);
+- group 11: `Fwd Header Length`, `min_seg_size_forward` (Free) with `Bwd Header Length` (Fixed).
+
+This matters for C1, D1 and F1 (see the notes there). The PDF's example of four `Fwd Packet Length …`
+twins does not hold exactly in our data: Max/Std form one group and Mean/`Avg Fwd Segment Size`
+another.
 
 ---
 
@@ -656,7 +669,8 @@ are not in our data (section 1.2).
 
 **Pitfalls:** The rate features (`Flow Bytes/s` …) are computed from duration and bytes. In reality,
 waiting longer *lowers* them, but our attack moves features one at a time. Note this as a limitation
-in the report.
+in the report. The same holds for twins (T4): when the attacker raises `Total Fwd Packets`, the real
+`Total Backward Packets` would usually rise too (the victim answers), but our attack leaves it alone.
 
 **Done when:** `GROUP` covers all 68 features and `can_change` returns `False` for every Fixed feature
 (test it with an `assert` over all Fixed features).
@@ -735,7 +749,8 @@ is hard to evade. If they are Free features, it is easy.
 - [ ] Markdown: are the most important features ones the attacker can change? What does that say about
       evasion? If a feature is used often by the attack but ranked low by SHAP, what could explain it?
       (Hint: a low-ranked feature can still tip a flow that is already close to 0.5; SHAP ranks the
-      average, the attacker exploits single flows.)
+      average, the attacker exploits single flows.) Also check the mixed twin groups in T4: a Fixed SHAP feature with a
+      Free or Costly twin is less safe than it looks.
 
 **Pitfalls:** TreeSHAP on 300 trees × 500 flows takes a few minutes; do not use more flows. Until C3 is
 done, use a stand-in `attack_counts` (e.g. an empty Series) and fill the table at sync 2.
@@ -854,7 +869,8 @@ random features.
 - [ ] Markdown: removing the top feature alone barely moved the score, but the group did. Was SHAP
       wrong, or the test?
 
-**Pitfalls:** Rank by the **signed** SHAP value for class 1 (what pushes towards "attack"), as in the
+**Pitfalls:** For the group version, `results/tables/T4_feature_glossary.md` lists all 14 twin groups
+at 0.95. Rank by the **signed** SHAP value for class 1 (what pushes towards "attack"), as in the
 hint. Work on copies of the rows.
 
 **What you should see:** top-k beats random-k clearly; the group drop is much larger than the single
