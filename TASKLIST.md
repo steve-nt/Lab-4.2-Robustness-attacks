@@ -279,8 +279,8 @@ start as soon as the setup notebook is on `main`.
 
 | ID | Task | What it is and why | Needs | Done |
 |---|---|---|---|---|
-| B1 | Add noise | `add_noise`; all three models at levels 0, 0.05, 0.10, 0.20, 0.50 | T3 | ☐ |
-| B2 | Lose some features | `add_missing`; all three models at 10% missing | T3 | ☐ |
+| B1 | Add noise | `add_noise`; all three models at levels 0, 0.05, 0.10, 0.20, 0.50 | T3 | ☑ |
+| B2 | Lose some features | `add_missing`; all three models at 10% missing | T3 | ☑ |
 
 ### Part C: break the model on purpose
 
@@ -316,8 +316,8 @@ start as soon as the setup notebook is on `main`.
 
 | ID | Task | What it is and why | Needs | Done |
 |---|---|---|---|---|
-| X1 | Whole-group sensor failure | Drop every `Bwd` field (or every idle timer) at once; answers B2's last question | B2 | ☐ |
-| X2 | Clip vs. no clip | Run B1 both ways; answers B1's question with numbers | B1 | ☐ |
+| X1 | Whole-group sensor failure | Drop every `Bwd` field (or every idle timer) at once; answers B2's last question | B2 | ☑ |
+| X2 | Clip vs. no clip | Run B1 both ways; answers B1's question with numbers | B1 | ☑ |
 | X3 | Attack success vs. budget | Constrained success rate for 1, 3, 5, 10 steps | C2 | ☐ |
 | X4 | Transfer attack | Rows crafted against the forest, scored by the tree, logreg and ensemble | C2, E1 | ☐ |
 | X5 | LIME stability | LIME 5 times with 5 seeds on the same flow: how often is the top 3 the same? | F3 | ☐ |
@@ -569,305 +569,16 @@ train, val and test (nothing to fix); 58 continuous, 10 flag columns. Extra cell
 columns have negative values in training, and the tails are extreme (e.g. `Total Length of Bwd Packets`
 has a 99th percentile of 91,561 but a maximum of 593,000,000). Saved `results/tables/A1_data_health.csv`.
 
-### Part B: break the data by accident
-
-| ID | Task | What it is and why | Needs | Done |
-|---|---|---|---|---|
-| B1 | Add noise | `add_noise`; all three models at levels 0, 0.05, 0.10, 0.20, 0.50 | T3 | ☐ |
-| B2 | Lose some features | `add_missing`; all three models at 10% missing | T3 | ☐ |
-
-### Part C: break the model on purpose
-
-| ID | Task | What it is and why | Needs | Done |
-|---|---|---|---|---|
-| C1 | Sort the features, set the budget | `GROUP`, `can_change`, step size 0.5 × std, at most 5 changes | T3 | ☐ |
-| C2 | Run the attack twice | Greedy attack on `ATTACK_IDX`, constrained and unconstrained, side by side | C1 | ☐ |
-| C3 | See what the attack touched | Top-10 most changed features and their groups; no Fixed feature may appear | C2 | ☐ |
-
-### Part D: does SHAP point where the attacker goes?
-
-| ID | Task | What it is and why | Needs | Done |
-|---|---|---|---|---|
-| D1 | SHAP top-10 vs. attacker top-10 | Is the model leaning on evidence the attacker can fake? | T3 (C1, C3 for the final table) | ☐ |
-| D2 | Is SHAP stable under noise? | Spearman correlation of SHAP rankings, clean vs. 5% noise | T3 (B1, or a stand-in) | ☐ |
-
-### Part E: two defences
-
-| ID | Task | What it is and why | Needs | Done |
-|---|---|---|---|---|
-| E1 | Ensemble | Gradient boosting + forest + logreg averaged; compare with the forest on clean, noise, missing, attack | T3 (B1, B2, C2 for the final table) | ☐ |
-| E2 | Drop one feature vs. a whole group | Single-feature removal looks free, group removal does not: measures redundancy | T3 | ☐ |
-
-### Part F: are the explanations honest?
-
-| ID | Task | What it is and why | Needs | Done |
-|---|---|---|---|---|
-| F1 | Deletion test, alone and in groups | Top-k vs. random-k (fidelity); single vs. group (redundancy) | T3 | ☐ |
-| F2 | Do the SHAP numbers add up? | Base value + SHAP values = model output, for 5 flows | T3 | ☐ |
-| F3 | How well does LIME fit? | LIME's R² on 20 flows; which flows fit worst | T3 | ☐ |
-
-### Optional extras
-
-| ID | Task | What it is and why | Needs | Done |
-|---|---|---|---|---|
-| X1 | Whole-group sensor failure | Drop every `Bwd` field (or every idle timer) at once; answers B2's last question | B2 | ☐ |
-| X2 | Clip vs. no clip | Run B1 both ways; answers B1's question with numbers | B1 | ☐ |
-| X3 | Attack success vs. budget | Constrained success rate for 1, 3, 5, 10 steps | C2 | ☐ |
-| X4 | Transfer attack | Rows crafted against the forest, scored by the tree, logreg and ensemble | C2, E1 | ☐ |
-| X5 | LIME stability | LIME 5 times with 5 seeds on the same flow: how often is the top 3 the same? | F3 | ☐ |
-| X6 | F2 for gradient boosting | Shows when the sigmoid is (and is not) needed | F2, E1 | ☐ |
-
-### Report and hand-in
-
-| ID | Task | What it is and why | Needs | Done |
-|---|---|---|---|---|
-| T5 | Report (2–3 pages) | Five headings set by the lab, captioned figures and tables, code screenshot, who-did-what, AI-use statement | all steps | ☐ |
-| T6 | README | Libraries, dataset, how to run (the lab requires it) | T2, T3 | ☐ |
-| T7 | Final check and submission | Fresh run of the assembled notebook, numbers match the report, upload to Canvas | T5, T6 | ☐ |
-
----
-
-## Division of work
-
-### Tracks
-
-The work splits into **three tracks** that only meet at the shared contract. With 3 people, one track
-each. With 2 people, use the second table. With 4, split Track 3 into (D2, F2, F3) and (E2, F1).
-
-| Track | Theme | Tasks | Report sections it writes |
-|---|---|---|---|
-| **1. Baseline and accidents** | How good is the model, and how much does messy data hurt? | T3, A1, A2, B1, B2, X1, X2 | Problem; Setup (data, models); Results A and B |
-| **2. Attacker** | Can a realistic attacker evade the forest, and does an ensemble help? | T2, C1, C2, C3, D1, E1, X3, X4 | Setup (feature-group table); Results C, D1, E1 |
-| **3. Honest explanations** | Are SHAP and LIME stable and faithful, and how redundant are the features? | T4, D2, E2, F1, F2, F3, X5, X6 | Results D2, E2, F; Discussion (stable/faithful) |
-
-Two people:
-
-| Person 1 | Person 2 |
-|---|---|
-| Track 1 + D2, F1, F2, F3 (+ X5, X6) | Track 2 + T4, E2 |
-
-Everyone writes the Discussion answers for their own steps' "Check yourself" questions; one person
-merges them (T5).
-
-### When we need each other
-
-Everything outside these points can be done alone.
-
-| Sync | When | What happens |
-|---|---|---|
-| 0 Kickoff | Day 1 | T1. Everyone can open `clean.csv` |
-| 1 Setup merged | End of day 1 | T2 and T3 are on `main`, everyone pulls. From now on each works in their own part notebook |
-| 2 Contract check | When B1, B2, C2 are done | Owners of D1, D2, E1 replace their stand-ins with the real `add_noise`, `add_missing`, `greedy_attack`, `attack_counts` and re-run. Compare: did any number change? |
-| 3 Assembly and results freeze | All steps done | Run `python tools/assemble.py --strict`. **Its** numbers go into the report |
-| 4 Hand-in | Before the deadline | T7 |
-
-```mermaid
-flowchart LR
-  T1[T1 kickoff] --> T2[T2 env, data, assemble] --> T3[T3 setup A0]
-  subgraph TR1[Track 1: baseline and accidents]
-    A1[A1 health] --> A2[A2 baseline]
-    B1[B1 noise]
-    B2[B2 missing]
-  end
-  subgraph TR2[Track 2: attacker]
-    C1[C1 groups] --> C2[C2 attack x2] --> C3[C3 what it touched]
-    D1[D1 SHAP vs attacker]
-    E1[E1 ensemble]
-  end
-  subgraph TR3[Track 3: honest explanations]
-    D2[D2 SHAP stability]
-    E2[E2 single vs group removal]
-    F1[F1 deletion test]
-    F2[F2 additivity]
-    F3[F3 LIME fit]
-  end
-  T3 --> TR1
-  T3 --> TR2
-  T3 --> TR3
-  B1 -.stand-in until sync 2.-> D2
-  B1 -.stand-in until sync 2.-> E1
-  B2 -.stand-in until sync 2.-> E1
-  C3 -.stand-in until sync 2.-> D1
-  TR1 --> ASM[assemble, sync 3]
-  TR2 --> ASM
-  TR3 --> ASM
-  ASM --> T5[T5 report] --> T7[T7 check + submit]
-```
-
-Dotted arrows are the only places where one track uses another's work, and a stand-in removes the wait.
-
-### Suggested order
-
-| Day | Track 1 | Track 2 | Track 3 |
-|---|---|---|---|
-| 1 | T1; T3 (merge the same day) | T1; T2 (merge first, T3 needs it) | T1; T4; read F2/F3 docs for shap and lime |
-| 2 | A1, A2, B1 | C1, C2 | F2, F3, D2 (with a noise stand-in) |
-| 3 | B2, X1, X2 → sync 2 | C3, D1, E1 → sync 2 | F1, E2 |
-| 4 | Report: Problem, Setup, A/B results | Report: C, D1, E1 results | Report: D2, E2, F results, X5/X6 |
-| 5 | T5 merge; sync 3 | T6 README | Discussion draft |
-| 6 | T7 | T7 | T7 |
-
----
-
-## 3. Tasks in detail
-
-Every task has the same parts: **Why** (what question it answers), **Background** (only where new ideas
-appear), **What to do** (tick the boxes), **Pitfalls**, **Done when**, and **Goes into the report**.
-
-### Phase 0: kickoff and setup
-
-#### T1 · Kickoff (everyone, about 1 hour)
-
-**Why:** This hour makes the rest independent. Once tracks, file owners and the contract names
-(section 2.3) are fixed, nobody has to wait for anybody.
-
-- [ ] Everyone reads sections 1–4 of the lab PDF (the lab asks for this before Part A) and section 0
-      of this file. Fill in the deadline at the top.
-- [ ] Go through sections 1.3 and 2 together and change anything someone disagrees with.
-- [ ] Choose tracks (Division of work). Write names next to the tracks.
-- [ ] Repository: add everyone as collaborators; each creates a personal branch.
-- [ ] Share `data/processed/clean.csv` (150 MB, not in git) with everyone, e.g. through the group's
-      shared folder.
-
-**Done when:** everyone agrees on section 2, has the repository, a branch and `clean.csv`.
-
-#### T2 · Environment, data and assembly script (Track 2)
-
-**Why:** Everyone must run the same code with the same library versions, or the numbers will not
-match at sync 3, and "the notebook reproduces your numbers" is 30% of the grade.
-
-- [x] Create the environment:
-      ```bash
-      uv venv --python 3.13 .venv
-      source .venv/bin/activate
-      uv pip install -r requirements.txt
-      ```
-      (No `uv`? `curl -LsSf https://astral.sh/uv/install.sh | sh`, then open a new terminal.)
-- [x] Check that `clean.csv` is the right file: `sha256sum data/processed/clean.csv` must print the
-      hash in `data/README.md`.
-- [x] Edit `tools/assemble.py`:
-  - `OUTPUT` → `lab4_2_robustness_attacks.ipynb`
-  - `STEP_ORDER` → `["A0", "A1", "A2", "B1", "B2", "C1", "C2", "C3", "D1", "D2", "E1", "E2", "F1", "F2", "F3"] + [f"X{i}" for i in range(1, 7)]`
-  - `TITLE` → Lab 4.2 title, group members, one-paragraph summary.
-- [x] Test the script on a tiny dummy notebook in `parts/` with `python tools/assemble.py --no-execute`, then delete the dummy.
-
-**Pitfalls:** A `ModuleNotFoundError` almost always means the virtual environment is not active
-(`source .venv/bin/activate` in every new terminal).
-
-**Done when:** everyone can run `python -c "import sklearn, shap, lime, scipy; print('OK')"` and the
-assembly script builds a notebook.
-
-#### T3 · Setup notebook, step A0 (Track 1)
-
-**Why:** Every part notebook starts by running this one, so it must be on `main` first. It also holds
-the lab's Section 4 ("re-run your Lab 1 loading and cleaning … then train the three models").
-
-**Background:** Training the forest on 268,000 rows takes about 15 minutes on a 4-core machine. We do it once and save the
-model to `models/` with `joblib.dump`; later runs load it with `joblib.load`. The assembled notebook
-must still train from scratch if `models/` is empty, so write "load if the file exists, otherwise train
-and save".
-
-- [x] `# STEP A0` cell 1: installs shap and lime **only if they are missing** (Colab). A plain
-      `%pip install` fails in a `uv` environment, which has no pip. Then all imports.
-- [x] If the working directory is `parts/`, `os.chdir("..")`, so paths mean the same thing in the part
-      notebooks and the final notebook.
-- [x] Load `data/processed/clean.csv`. `y = (Label != "BENIGN").astype(int)`, `X` = every other column.
-- [x] Split exactly like `lab1_pipeline/prepare.py` (stratify on the **attack type** `Label`, not on
-      `y`; `test_size=0.20`, then `test_size=0.25`; `random_state=42`). Assert the sizes in section 1.1.
-- [x] `FEATURES`, `CONT_COLS`, `FLAG_COLS` (more than 2 distinct values in `X_train` → continuous),
-      `TRAIN_STD = X_train.std()`, `TRAIN_MEDIAN = X_train.median()`, `CORR` (computed with
-      `np.corrcoef`: same numbers as `X_train.corr().abs()`, 7× faster).
-- [x] `report(model, X, y)`: uses `model.predict` and `model.predict_proba(X)[:, 1]`; returns
-      accuracy, macro-F1 (`f1_score(..., average="macro")`), recall, ROC-AUC, **PR-AUC**
-      (`average_precision_score`) and FAR (`FP / (FP + TN)` from `confusion_matrix`; Lab 1's
-      `lab1_pipeline/metrics.py` has a `false_alarm_rate` you can copy).
-- [x] Train (or load) `tree`, `logreg`, `rf` with the settings in section 1.3; put them in `MODELS`.
-- [x] `ATTACK_IDX`: among test flows with `y_test == 1` and forest prediction 1, the 50 with the
-      highest forest probability.
-- [x] `EXPLAIN_IDX = np.random.default_rng(SEED).choice(len(X_test), 500, replace=False)`.
-- [x] Print a short summary (sizes, attack rate, models loaded or trained) and assert that every
-      shared name exists. The models are **scored in A2**, not here: scoring the forest twice over the
-      test set made setup about 40 s slower.
-- [ ] Merge to `main` the same day (git, done by you).
-
-**Pitfalls:**
-- `ATTACK_IDX` and `EXPLAIN_IDX` are **positions** (use `X_test.iloc[...]`), not index labels.
-- Fit `StandardScaler` only inside the logreg Pipeline, never on the whole data.
-- `RandomForestClassifier` fitted on a DataFrame warns when it gets a numpy array. Always pass
-  DataFrames (wrap with `pd.DataFrame(arr, columns=FEATURES)` where needed).
-
-**Done when:** `%run 00_setup.ipynb` from another notebook in `parts/` gives every name in the first
-table of section 2.3, quickly when the models are cached.
-
-**Result (2026-10-04, `parts/00_setup.ipynb`, 4-core / 9 GB VM):**
-
-| Run | Time |
-|---|---|
-| First run, trains all three models | about 22 min (tree 42 s, logreg 288 s, forest 855 s) |
-| Later runs, models loaded from `models/` | about 1.5 min (reading the CSV ~16 s and the forest's test predictions ~20 s are most of it) |
-
-Clean-test scores from this run, for A2 to confirm: forest macro-F1 0.9968 (identical to Lab 1),
-tree 0.9970, logreg 0.9417. The 50 `ATTACK_IDX` flows all have forest probability **1.000** (25 DDoS,
-22 DoS Hulk, 2 DoS GoldenEye, 1 SSH-Patator). Because they start at 1.000, they are hard to evade,
-so expect a low constrained success rate in C2. `EXPLAIN_IDX` holds 68 attacks among its 500 flows.
-
-#### T4 · Feature-name cheat sheet (Track 3)
-
-**Why:** Every result in this lab is a list of feature names. With no networking background,
-`Init_Win_bytes_backward` means nothing. A one-page table makes every later table readable, and the
-report can use a shortened version for the feature groups.
-
-- [x] `results/tables/T4_feature_glossary.csv` and a readable `results/tables/T4_feature_glossary.md`,
-      both written by `python tools/feature_glossary.py`: name, plain-language meaning, unit,
-      forward/backward/both, proposed group (from the C1 name rules), train min / median / max,
-      whether negatives occur, and the twin group.
-- [x] Twin families found **from the data**, not guessed: features linked by |correlation| > 0.95 on
-      the training set, directly or through a chain.
-
-**Done when:** every one of the 68 features has a one-line meaning.
-
-**Result (2026-10-04):** 68 features (20 forward, 17 backward, 31 both); the C1 name rules propose 25
-Free, 5 Costly, 38 Fixed. 11 features have negative values in training (−1 = "not recorded", plus
-CICFlowMeter bugs in the header lengths). **14 twin groups cover 39 features.** Two of them are
-**mixed**: they hold features the attacker can change *and* features they cannot:
-- group 2: `Total Fwd Packets`, `Subflow Fwd Packets`, `act_data_pkt_fwd` (Costly) with
-  `Total Backward Packets`, `Total Length of Bwd Packets`, `Subflow Bwd …` (Fixed);
-- group 11: `Fwd Header Length`, `min_seg_size_forward` (Free) with `Bwd Header Length` (Fixed).
-
-This matters for C1, D1 and F1 (see the notes there). The PDF's example of four `Fwd Packet Length …`
-twins does not hold exactly in our data: Max/Std form one group and Mean/`Avg Fwd Segment Size`
-another.
-
----
-
-### Part A: the baseline (Track 1, notebook `10_baseline_noise.ipynb`)
-
-#### A1 · Check the data is healthy
-
-**Why:** Infinite or missing values make the noise and attack steps crash or produce nonsense. And
-knowing which columns are continuous decides which ones get noise in B1.
-
-- [ ] Print the shapes of `X_train` and `X_test` and the attack share in `y_train`.
-- [ ] `np.isfinite(X_train).all().all()` (and the same for val and test). If anything is not finite,
-      fix it here: replace ±inf with NaN, then fill with `TRAIN_MEDIAN`.
-- [ ] Print how many columns are continuous and how many are 0/1 flags (`CONT_COLS`, `FLAG_COLS`).
-
-**What you should see:** about 0.15 attacks; everything finite (Lab 1 dropped those rows); 58
-continuous columns and 10 flag columns.
-
-**Done when:** the three checks print and pass.
-**Goes into the report:** Setup section (sizes, attack rate, "no infinities remained").
-
 #### A2 · Score the three models and the do-nothing model
 
 **Why:** A score means nothing on its own. With 15% attacks, answering "benign" every time is already
 85% accurate. Every later number in the lab is compared with this table.
 
-- [ ] Run `report()` on `tree`, `logreg`, `rf` with the clean test set; one table, one row per model.
-- [ ] Add a row for "always benign": accuracy `1 - y_test.mean()` (≈ 0.849), recall 0, FAR 0. Its
+- [x] Run `report()` on `tree`, `logreg`, `rf` with the clean test set; one table, one row per model.
+- [x] Add a row for "always benign": accuracy `1 - y_test.mean()` (≈ 0.849), recall 0, FAR 0. Its
       macro-F1 is about 0.46 (F1 of the benign class / 2); PR-AUC equals the attack rate (≈ 0.15).
-- [ ] Save as `results/tables/A2_baseline.csv`.
-- [ ] Answer the two "Check yourself" questions in a Markdown cell: how far above the always-benign
+- [x] Save as `results/tables/A2_baseline.csv`.
+- [x] Answer the two "Check yourself" questions in a Markdown cell: how far above the always-benign
       accuracy is the forest, and which moved more between models, ROC-AUC or PR-AUC, and why?
 
 **What you should see:** the forest near 0.99 on most scores; the always-benign row looks fine on
@@ -875,6 +586,21 @@ accuracy alone.
 
 **Done when:** the table has four rows and six score columns.
 **Goes into the report:** Results (first table); Discussion ("How much of your score is real?").
+
+**Result (2026-10-04):** `results/tables/A2_baseline.csv`. The always-benign model is a
+`DummyClassifier(strategy="constant", constant=0)`, so it goes through the same `report()`.
+
+| Model | Accuracy | Macro-F1 | Recall | ROC-AUC | PR-AUC | FAR |
+|---|---|---|---|---|---|---|
+| always benign | 0.8493 | 0.4593 | 0.0000 | 0.5000 | 0.1507 | 0.0000 |
+| tree | 0.9985 | 0.9970 | 0.9950 | 0.9971 | 0.9907 | 0.0009 |
+| logreg | 0.9720 | 0.9417 | 0.8326 | 0.9914 | 0.9693 | 0.0032 |
+| forest | 0.9984 | 0.9968 | 0.9923 | 0.9999 | 0.9998 | 0.0006 |
+
+Check-yourself answers are in the notebook. In short: the forest is +0.149 above always-benign on
+accuracy, but removes 99% of the errors and lifts recall from 0 to 0.99. PR-AUC moved more than
+ROC-AUC (spread 0.031 vs 0.009). Side note: the tree has the best macro-F1 but the lowest ROC-AUC,
+because its probabilities are almost all 0 or 1.
 
 ---
 
@@ -889,20 +615,20 @@ will never have in production.
 0 and standard deviation `level × TRAIN_STD[column]`. Using the **training** std is required:
 measuring it on the test set is leakage (graded under methodology).
 
-- [ ] Write `add_noise(X, X_ref, level, seed=SEED)`:
+- [x] Write `add_noise(X, X_ref, level, seed=SEED)`:
   - copy `X` (never change the original);
   - `rng = np.random.default_rng(seed)`;
   - for `CONT_COLS` only: add `rng.normal(0, level * X_ref[col].std(), size=len(X))` (or vectorised
     over all continuous columns at once);
   - leave `FLAG_COLS` untouched.
-- [ ] Decide whether to clip at zero and **write the reason in a comment**. Note from section 1.2: some
+- [x] Decide whether to clip at zero and **write the reason in a comment**. Note from section 1.2: some
       columns already contain −1 or negative durations, so clip only columns whose training minimum is
       ≥ 0 (e.g. `np.maximum(noisy, 0)` for those columns), or do not clip.
-- [ ] For levels 0.00, 0.05, 0.10, 0.20, 0.50: macro-F1 and recall for all three models. Save
+- [x] For levels 0.00, 0.05, 0.10, 0.20, 0.50: macro-F1 and recall for all three models. Save
       `results/tables/B1_noise.csv`.
-- [ ] Plot macro-F1 and recall against noise level, one line per model:
+- [x] Plot macro-F1 and recall against noise level, one line per model:
       `results/figures/B1_noise_curves.png`.
-- [ ] Markdown: why does the single tree fall apart faster than the forest? Did clipping change the
+- [x] Markdown: why does the single tree fall apart faster than the forest? Did clipping change the
       results? Is a negative packet count a fair test?
 
 **Pitfalls:** Call it as `add_noise(X_test, X_train, level)`, with the training set as reference. Same
@@ -914,24 +640,51 @@ macro-F1 holds up; watch both.
 **Done when:** the table and figure exist and `add_noise` matches the contract signature.
 **Goes into the report:** Results (noise table or figure); Discussion (which model is most robust).
 
+**Result (2026-10-04, `parts/10_baseline_noise.ipynb`):** `results/tables/B1_noise.csv`,
+`results/figures/B1_noise_curves.png`. `add_noise(X, X_ref, level, seed=SEED, clip=True)` clips at
+zero only the 47 continuous columns whose training minimum is ≥ 0.
+
+| Level | 0% | 5% | 10% | 20% | 50% |
+|---|---|---|---|---|---|
+| forest macro-F1 / recall | 0.997 / 0.992 | 0.521 / 0.063 | 0.508 / 0.049 | 0.497 / 0.038 | 0.480 / 0.020 |
+| tree macro-F1 / recall | 0.997 / 0.995 | 0.399 / 0.109 | 0.396 / 0.108 | 0.396 / 0.113 | 0.395 / 0.133 |
+| logreg macro-F1 / recall | 0.942 / 0.833 | 0.909 / 0.837 | 0.858 / 0.833 | 0.753 / 0.795 | 0.597 / 0.708 |
+
+**Not what the lab expects:** both tree models collapse already at 5%, and logistic regression is
+the most robust. This is real, not a bug (checked in a diagnostic cell). Outliers inflate the std of
+the timing columns by a factor of 50,000 to 1,500,000, so even 0.05% of the std swamps the
+microsecond gaps the trees split on. Noise on one column alone costs < 0.01 recall because twins
+cover for it. With a robust (IQR) scale instead of the std, the forest keeps about 0.75 recall. The
+notebook explains this and answers both "Check yourself" questions.
+
+> **Note for D2 and E1:** they reuse 5% noise. At this level the forest predicts almost everything
+> benign, so expect SHAP rankings on noisy data (D2) to change a lot, and the ensemble (E1) to beat the
+> forest under noise mainly because logistic regression is one of its members. Explain this rather
+> than treating it as a bug.
+
 #### B2 · Lose some features
 
 **Why:** Collectors under load drop fields. The model has to guess, and the honest guess for "unknown"
 is an ordinary value: the training median.
 
-- [ ] Write `add_missing(X, frac, seed=SEED)`: copy `X`; for each row pick `round(frac × 68)` random
+- [x] Write `add_missing(X, frac, seed=SEED)`: copy `X`; for each row pick `round(frac × 68)` random
       columns (different columns per row) and set them to `TRAIN_MEDIAN` for those columns.
       Vectorised hint: draw a random matrix `rng.random(X.shape)`, and in each row mark the
       `k` smallest values as missing (`np.argsort(..., axis=1)[:, :k]`).
-- [ ] Run at 10% for all three models; compare with A2's clean scores (macro-F1, recall, PR-AUC, FAR).
+- [x] Run at 10% for all three models; compare with A2's clean scores (macro-F1, recall, PR-AUC, FAR).
       Save `results/tables/B2_missing.csv`.
-- [ ] Markdown: which does more damage, noise or missing values? Would a whole group failing together
+- [x] Markdown: which does more damage, noise or missing values? Would a whole group failing together
       (all `Bwd` fields) be worse? (X1 answers this with numbers.)
 
 **Pitfalls:** Medians from the **training** set, never the test set.
 
 **Done when:** the table exists and `add_missing` matches the contract.
 **Goes into the report:** Results (missing-value table, next to B1).
+
+**Result (2026-10-04):** `results/tables/B2_missing.csv`. 7 of 68 features per row (10.3%) set to the
+training median. Macro-F1 / recall at 10% missing: forest 0.990 / 0.968, tree 0.876 / 0.746, logreg
+0.781 / 0.613. Noise hurts the trees far more than missing values; for logistic regression it is the
+other way round. No model is safest against both.
 
 ---
 
@@ -1225,8 +978,8 @@ Below R² 0.70 the explanation should not be trusted much.
 
 | ID | What to do | Owner |
 |---|---|---|
-| X1 | Replace **all** `Bwd` features (then all `Idle` features) with medians at once; compare with B2's random 10% | Track 1 |
-| X2 | Run B1 with and without clipping at zero; one table | Track 1 |
+| X1 | Replace **all** `Bwd` features (then all `Idle` features) with medians at once; compare with B2's random 10% | Track 1. ☑ Done: all 17 backward features missing → forest recall **0.001** (17 random per row: 0.68); all idle timers missing → almost no loss. `results/tables/X1_group_missing.csv` |
+| X2 | Run B1 with and without clipping at zero; one table | Track 1. ☑ Done: no change for tree and forest, logreg macro-F1 up to +0.023 with clipping. `results/tables/X2_clip_vs_noclip.csv` |
 | X3 | Constrained attack success rate with 1, 3, 5, 10 steps; plot | Track 2 |
 | X4 | Score the 50 rows crafted against `rf` with `tree`, `logreg` and `ensemble` (does evasion transfer?) | Track 2 |
 | X5 | LIME 5 times with seeds 0–4 on the same flow; count how often the top-3 is the same. SHAP gives the same answer every time | Track 3 |

@@ -127,3 +127,56 @@ whether to clip noise at zero.
 Notebook ran top to bottom in 174 s with no errors. The scores match the T3 run. All
 cells have step markers. `tools/assemble.py --no-execute` places A0, A1, A2 in order. The generated
 notebook was deleted afterwards because it is only built at sync 3.
+
+## 2026-10-04 15:38 EEST: B1, B2 (and extras X1, X2), noise and missing values
+
+**What**
+- `parts/10_baseline_noise.ipynb`: added steps B1, B2, X1 and X2 (now 27 cells, saved with outputs)
+  - B1: `add_noise(X, X_ref, level, seed=SEED, clip=True)`. The std comes from the reference
+    (training) set; flags are left alone; columns that are never negative in training are clipped
+    at zero. All three models are scored at 0/5/10/20/50% noise, with the figure. A diagnostic cell
+    shows why the tree models collapse (outlier-inflated std), and the "Check yourself" answers
+    are written up
+  - X2: the same run without clipping, side by side
+  - B2: `add_missing(X, frac, seed=SEED)` puts training medians into 7 of 68 random features per row.
+    It is scored at 10% and compared with clean data and 5% noise
+  - X1: whole groups missing (all 17 backward features, all 4 idle timers), compared with random
+    missing values of the same size
+- `results/tables/B1_noise.csv`, `B2_missing.csv`, `X1_group_missing.csv`,
+  `X2_clip_vs_noclip.csv`, `results/figures/B1_noise_curves.png`: written by the notebook
+- `TASKLIST.md`: B1, B2, X1, X2 ticked with results, plus a note for D2 and E1 (both reuse 5% noise)
+
+**Why**
+Lab steps B1 and B2. X1 and X2 were added because the "Check yourself" questions of B2 and B1 ask
+exactly what they measure. The figure follows the dataviz palette: fixed colour per model, plus
+marker shape and direct labels, because the aqua line is below 3:1 contrast. The result goes against
+the lab text (the forest collapses at 5% noise). It was traced to the heavy tails rather than
+explained away. Diagnosis:
+- noise on one column at a time costs < 0.01 recall each;
+- recall falls steadily as more columns get noise;
+- even a level of 0.0005 drops the forest to 0.86 recall;
+- noise scaled by the IQR leaves it about 0.75.
+
+**Verified**
+Notebook ran top to bottom without errors or warnings (449 s). Assertions pass: flags untouched,
+level 0 is a no-op, clipped columns are never negative, at most 7 changes per row in `add_missing`.
+The figure was checked by eye after moving the legend off the lines.
+
+## 2026-10-04 15:38 EEST: Correction, TASKLIST.md had duplicated sections
+
+**What**
+- `TASKLIST.md`: rebuilt from the clean version in commit 4cff7c5. The A1, A2, B1, B2, X1, X2 edits
+  were re-applied with a helper that looks for headings only inside "## 3. Tasks in detail" and
+  checks each one occurs exactly once
+
+**Why**
+The entry "A1 and A2, data health and baseline" above was wrong about `TASKLIST.md`. The edit cut
+the file at the first "### Part B: break the data by accident", which is in the task overview, not
+in section 3. As a result, the overview through A1 was duplicated (≈ 294 extra lines) and the A2
+result text was lost. That version was committed as 9f3dee2. This turn's first B1/B2 edit repeated
+the mistake with the Part C heading, and was replaced by the rebuild.
+
+**Verified**
+The diff against 4cff7c5 contains only the intended ticks and result notes (70 lines added,
+23 changed). Each of "## Task overview", "## 3. Tasks in detail" and the A1, A2, B1, B2, C1, T7
+headings now occurs exactly once (1,042 lines).
