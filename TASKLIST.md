@@ -289,7 +289,7 @@ start as soon as the setup notebook is on `main`.
 |---|---|---|---|---|
 | C1 | Sort the features, set the budget | `GROUP`, `can_change`, step size 0.5 × std, at most 5 changes | T3 | ☑ |
 | C2 | Run the attack twice | Greedy attack on `ATTACK_IDX`, constrained and unconstrained, side by side | C1 | ☑ |
-| C3 | See what the attack touched | Top-10 most changed features and their groups; no Fixed feature may appear | C2 | ☐ |
+| C3 | See what the attack touched | Top-10 most changed features and their groups; no Fixed feature may appear | C2 | ☑ |
 
 ### Part D: does SHAP point where the attacker goes?
 
@@ -799,10 +799,10 @@ order as `ATTACK_IDX`), `TRAIN_MAX`, `FEATURE_POS`.
 
 **Why:** Shows the attacker's favourite levers, and checks C1/C2 for bugs.
 
-- [ ] From the constrained run, count how often each feature was changed over all 50 flows →
+- [x] From the constrained run, count how often each feature was changed over all 50 flows →
       `attack_counts` (pandas Series, sorted).
-- [ ] Print the top 10 with their group; save `results/tables/C3_attack_top10.csv`.
-- [ ] `assert` that no Fixed feature appears. If one does, `can_change` or `greedy_attack` has a bug:
+- [x] Print the top 10 with their group; save `results/tables/C3_attack_top10.csv`.
+- [x] `assert` that no Fixed feature appears. If one does, `can_change` or `greedy_attack` has a bug:
       fix it before continuing.
 
 **What you should see:** timing features (`Flow IAT …`, `Idle …`, `Flow Duration`) probably lead,
@@ -810,6 +810,19 @@ because waiting costs the attacker nothing.
 
 **Done when:** the top-10 table exists and the assertion passes.
 **Goes into the report:** Results (next to D1's SHAP list).
+
+**Result (2026-10-04, `parts/20_attack.ipynb`):** `results/tables/C3_attack_top10.csv` and the full
+`C3_attack_counts.csv` (steps, flows, steps in evaded / not-evaded flows). 232 steps, 22 features,
+**no Fixed feature** (assert over all of them). `attack_counts` counts steps.
+
+- Overall the top features are forward counts and sizes (`Subflow Fwd Packets` 41,
+  `Total Length of Fwd Packets` 41, `Fwd Packet Length Max` 39), not timing as the lab expects. They
+  come almost entirely from the 41 flows that were not evaded.
+- In the 9 successful evasions timing leads: 18 of 27 steps; `Flow IAT Min` and `Fwd IAT Min` are in
+  all 7 DDoS evasions.
+
+> **Note for D1:** compare SHAP with both lists. "What the attacker tries" is `attack_counts`; "what
+> works" is the `steps_in_evaded` column of `C3_attack_counts.csv`.
 
 ---
 

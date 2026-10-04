@@ -234,3 +234,25 @@ Notebook ran without errors in 242 s. All audits pass. Results: constrained 9/50
 contained an assert that could never fail (`... or True`); it was replaced with a real check before
 the final run. Two figures in the write-up were corrected against the output (2–4 changes, not 2–3;
 `Flow IAT Min` step 1.6 s).
+
+## 2026-10-04 16:45 EEST: C3, what the constrained attack changed
+
+**What**
+- `parts/20_attack.ipynb`: added step C3 (now 22 cells, saved with outputs):
+  - `attack_counts` (steps per feature, constrained run)
+  - a `usage` table with group, steps, flows and steps in evaded / not-evaded flows
+  - an assert that no Fixed feature was changed, and an assert that each group label matches `GROUP`
+  - group totals, the features of the 9 successful evasions, and a written finding
+- `results/tables/C3_attack_top10.csv`, `results/tables/C3_attack_counts.csv`: written by the notebook
+- `TASKLIST.md`: C3 ticked, with results and a note for D1
+
+**Why**
+Lab step C3. Counts were split by evaded / not evaded because the overall counts are dominated by
+the 41 failed attempts. The overall top features (forward counts and sizes) differ from what made
+the 9 evasions work (timing), and D1 needs to know which list to compare with SHAP.
+
+**Verified**
+Notebook ran without errors in 256 s; both asserts pass (22 features changed, none Fixed). The first
+run had the group column misaligned: labels were attached by position, and pandas reordered the rows
+by feature name. Fixed by looking up the group per feature after the table is built; checked by the
+new assert.

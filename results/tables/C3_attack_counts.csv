@@ -1,0 +1,23 @@
+feature,group,steps,flows,steps_in_evaded,steps_in_not_evaded
+Subflow Fwd Packets,Costly,41,41,2,39
+Total Length of Fwd Packets,Costly,41,39,0,41
+Fwd Packet Length Max,Free,39,20,0,39
+Fwd Header Length,Free,30,30,2,28
+Total Fwd Packets,Costly,24,24,2,22
+Subflow Fwd Bytes,Costly,15,15,0,15
+Flow IAT Min,Free,7,7,7,0
+Fwd IAT Min,Free,7,7,7,0
+Active Std,Free,5,5,0,5
+Fwd IAT Std,Free,3,3,2,1
+Fwd Packet Length Mean,Free,3,3,3,0
+Fwd Packet Length Min,Free,3,3,0,3
+Flow IAT Max,Free,2,2,0,2
+Fwd IAT Mean,Free,2,2,1,1
+Fwd Packet Length Std,Free,2,2,0,2
+act_data_pkt_fwd,Costly,2,2,0,2
+Active Max,Free,1,1,0,1
+Active Min,Free,1,1,0,1
+Flow IAT Mean,Free,1,1,1,0
+Flow IAT Std,Free,1,1,0,1
+Fwd IAT Max,Free,1,1,0,1
+Fwd IAT Total,Free,1,1,0,1
