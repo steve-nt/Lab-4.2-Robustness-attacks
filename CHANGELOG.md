@@ -359,3 +359,23 @@ Notebook ran without errors (482 s, mostly D2's SHAP). Both asserts pass: forest
 4.4e-16 without a sigmoid; gradient boosting difference < 0.001 only after the sigmoid.
 `tools/assemble.py --no-execute` finds F2 and X6. Two numbers in the write-up were corrected
 against the output (sigmoid range 0.50–0.73).
+
+## 2026-10-05 02:01 EEST: F3, how well LIME fits the forest
+
+**What**
+- `parts/30_explanations.ipynb`: added step F3 before the X6 extra (now 20 cells, saved with outputs):
+  - a LIME explainer on a seeded 10,000-row training sample (`discretize_continuous=True`)
+  - fit scores for 20 random test flows plus 10 borderline flows (forest probability 0.3–0.7)
+  - the summary per group, the correlation of fit with distance from 0.5, the written findings, and
+    both "Check yourself" answers
+- `results/tables/F3_lime_fit.csv`: written by the notebook
+- `TASKLIST.md`: F3 ticked, with results
+
+**Why**
+Lab step F3. The borderline group was added because 20 random flows almost all have probability
+exactly 0 or 1, so they cannot answer the lab's question about flows near 0.5.
+
+**Verified**
+Notebook ran without errors (278 s; LIME 12 s). The very low fit scores (mean R² 0.175, all below
+0.70) were cross-checked against Lab 3's LIME results on the same CICIDS data (mean 0.21, none
+above 0.70), so they are not a setup error.

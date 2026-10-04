@@ -311,7 +311,7 @@ start as soon as the setup notebook is on `main`.
 |---|---|---|---|---|
 | F1 | Deletion test, alone and in groups | Top-k vs. random-k (fidelity); single vs. group (redundancy) | T3 | ☐ |
 | F2 | Do the SHAP numbers add up? | Base value + SHAP values = model output, for 5 flows | T3 | ☑ |
-| F3 | How well does LIME fit? | LIME's R² on 20 flows; which flows fit worst | T3 | ☐ |
+| F3 | How well does LIME fit? | LIME's R² on 20 flows; which flows fit worst | T3 | ☑ |
 
 ### Optional extras
 
@@ -1058,16 +1058,16 @@ that loads `models/gb.joblib`.
 **Why:** LIME's slopes only mean something if its straight line fits the model near the flow. LIME
 reports that fit (`exp.score`, an R²), so it can be checked on every explanation.
 
-- [ ] `LimeTabularExplainer(training_data, feature_names=FEATURES, class_names=["benign", "attack"],
+- [x] `LimeTabularExplainer(training_data, feature_names=FEATURES, class_names=["benign", "attack"],
       discretize_continuous=True, random_state=SEED)`. `training_data` = `X_train` as a numpy array (a
       seeded 10,000-row sample is fine and much faster; say so).
-- [ ] Prediction function: LIME passes numpy arrays, so wrap:
+- [x] Prediction function: LIME passes numpy arrays, so wrap:
       `lambda a: rf.predict_proba(pd.DataFrame(a, columns=FEATURES))`.
-- [ ] 20 random test flows (seeded). For each: `exp = explainer.explain_instance(row, fn,
+- [x] 20 random test flows (seeded). For each: `exp = explainer.explain_instance(row, fn,
       num_features=10)`, record `exp.score` and the forest's probability.
-- [ ] Print every score, the mean, the minimum, and the probability of the worst-fitting flow. Save
+- [x] Print every score, the mean, the minimum, and the probability of the worst-fitting flow. Save
       `results/tables/F3_lime_fit.csv`.
-- [ ] Markdown: were the worst fits near probability 0.5? Of F1, F2, F3, which could run automatically
+- [x] Markdown: were the worst fits near probability 0.5? Of F1, F2, F3, which could run automatically
       on every alert an analyst sees, and why?
 
 **Pitfalls:** With 15% attacks, 20 random flows may hold only 2–4 attacks. That is fine, but report it.
@@ -1075,6 +1075,17 @@ Below R² 0.70 the explanation should not be trusted much.
 
 **Done when:** 20 fit scores, mean, minimum and the worst flow's probability are saved.
 **Goes into the report:** Results (fit summary); Discussion.
+
+**Result (2026-10-05, `parts/30_explanations.ipynb`):** `results/tables/F3_lime_fit.csv`. LIME
+background is a seeded 10,000-row training sample. 20 random flows (2 attacks) plus 10 borderline
+flows (forest probability 0.3–0.7) as a comparison group.
+
+- Random flows: R² 0.075–0.300, **mean 0.175, all 20 below 0.70**. Worst: a benign flow with
+  probability 0.000 (R² 0.075).
+- Borderline flows fit no worse (mean 0.175); no link between fit and distance from 0.5 (Spearman
+  −0.20, p = 0.30).
+- Matches Lab 3 on the same data (mean R² 0.21, none above 0.70): LIME's straight line cannot follow
+  the forest's step-shaped output.
 
 ---
 
