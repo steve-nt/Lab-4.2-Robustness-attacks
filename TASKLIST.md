@@ -296,7 +296,7 @@ start as soon as the setup notebook is on `main`.
 | ID | Task | What it is and why | Needs | Done |
 |---|---|---|---|---|
 | D1 | SHAP top-10 vs. attacker top-10 | Is the model leaning on evidence the attacker can fake? | T3 (C1, C3 for the final table) | ☑ |
-| D2 | Is SHAP stable under noise? | Spearman correlation of SHAP rankings, clean vs. 5% noise | T3 (B1, or a stand-in) | ☐ |
+| D2 | Is SHAP stable under noise? | Spearman correlation of SHAP rankings, clean vs. 5% noise | T3 (B1, or a stand-in) | ☑ |
 
 ### Part E: two defences
 
@@ -875,11 +875,11 @@ Shared names made here: `explainer`, `sv`, `shap_attack` (500 × 68), `shap_rank
 **Why:** If 5% noise reshuffles SHAP's ranking, the explanation analysts see depends on measurement
 error. This tests *stability*; F1 tests *faithfulness*.
 
-- [ ] Flows: `X_test.iloc[EXPLAIN_IDX[:200]]`. SHAP on the clean flows and on
+- [x] Flows: `X_test.iloc[EXPLAIN_IDX[:200]]`. SHAP on the clean flows and on
       `add_noise(those_flows, X_train, 0.05)`.
-- [ ] Ranking for each = mean \|SHAP\| per feature (class 1). `scipy.stats.spearmanr(clean, noisy)`
+- [x] Ranking for each = mean \|SHAP\| per feature (class 1). `scipy.stats.spearmanr(clean, noisy)`
       over the 68 features.
-- [ ] Print the correlation and both top-5 lists; save `results/tables/D2_shap_stability.csv`.
+- [x] Print the correlation and both top-5 lists; save `results/tables/D2_shap_stability.csv`.
 
 **Pitfalls:** Until B1 is merged, write a stand-in `add_noise` (`# STANDIN B1`) with the contract
 signature. Replace it at sync 2 and check that the number did not change much.
@@ -889,6 +889,20 @@ signature. Replace it at sync 2 and check that the number did not change much.
 **Done when:** the correlation and two top-5 lists are printed and saved.
 **Goes into the report:** Results (one sentence + small table); Discussion ("stable, faithful, both or
 neither?").
+
+**Result (2026-10-04, `parts/30_explanations.ipynb`):** `results/tables/D2_shap_stability.csv`
+(both rankings), `D2_stability_by_level.csv`, `D2_stability_split.csv`. Also ran 0.1% and 1% noise
+for context.
+
+- Spearman clean vs 5%: **0.899**, just under the 0.90 line (0.907 at 0.1%, 0.905 at 1%). Top
+  feature unchanged; 3 of the top 5 survive.
+- Over the top-20 features the correlation falls to 0.67 (1%) and **0.50** (5%). The 68-feature
+  number is propped up by unimportant features staying at the bottom.
+- Attacks only: ranking stable (0.95), but the total SHAP push to "attack" falls from +0.84 to +0.22
+  and only 1 of 24 attacks is still detected. The explanation names the same features for a
+  reversed decision.
+
+The notebook starts with `# STANDIN A0` and `# STANDIN B1` (a verbatim copy of `add_noise`).
 
 ---
 

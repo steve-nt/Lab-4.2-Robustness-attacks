@@ -1,0 +1,4 @@
+noise level,"all 200 flows, 68 features","all 200 flows, clean top-20 features","24 attacks only, 68 features","176 benign only, 68 features",attacks: mean SHAP sum (clean -> noisy)
+0.0010,0.9071,0.9083,0.9582,0.8628,+0.842 -> +0.492
+0.0100,0.9048,0.6692,0.9476,0.8347,+0.842 -> +0.274
+0.0500,0.8991,0.4962,0.9494,0.8304,+0.842 -> +0.216

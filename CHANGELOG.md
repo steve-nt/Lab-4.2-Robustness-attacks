@@ -311,3 +311,29 @@ times. `tools/assemble.py --no-execute` orders A0–E1. The first write-up said 
 about 0; the second run shows it was already unsure about those flows (mean 0.46 before the attack),
 so the text was corrected. The latency numbers in the text were changed to approximate values,
 because they vary between runs (83–92 ms).
+
+## 2026-10-04 18:02 EEST: D2, stability of SHAP under noise
+
+**What**
+- `parts/30_explanations.ipynb`: created (Track 3 notebook), saved with outputs:
+  - `# STANDIN A0` and `# STANDIN B1` (a verbatim copy of `add_noise`)
+  - step D2: SHAP for the forest on the first 200 `EXPLAIN_IDX` flows, clean and at 0.1%, 1% and
+    5% noise
+  - Spearman correlation, top-10 overlap, top-5 lists, and how many predictions changed
+  - a split of the correlation by top-20 features and by attack / benign flows
+  - the written findings
+- `results/tables/D2_shap_stability.csv`, `D2_stability_by_level.csv`, `D2_stability_split.csv`:
+  written by the notebook
+- `TASKLIST.md`: D2 ticked, with results
+
+**Why**
+Lab step D2. The extra noise levels and the split were added because the lab's single 68-feature
+correlation (0.899) hides two things. Over the top-20 features the ranking is not stable (0.50 at
+5%). For attack flows the ranking stays the same (0.95), while the model's decision reverses (1 of
+24 attacks still detected).
+
+**Verified**
+Notebook ran without errors twice (466 s and 458 s), with identical numbers. `tools/assemble.py
+--no-execute` finds D2 in the new notebook. My first guess was that near-zero features reshuffle
+and lower the correlation; the split showed the opposite (they prop it up), and the text follows
+the data.

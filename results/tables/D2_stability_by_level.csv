@@ -1,0 +1,4 @@
+noise level,spearman,top-10 overlap,top-5 identical,flows whose prediction changed,attacks still detected
+0.0010,0.9071,9,False,5,19 of 24
+0.0100,0.9048,7,False,19,5 of 24
+0.0500,0.8991,7,False,23,1 of 24
