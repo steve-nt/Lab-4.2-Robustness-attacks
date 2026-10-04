@@ -220,6 +220,7 @@ else may write a stand-in with the same signature.
 | `SEED = 42` | The seed |
 | `X_train, X_val, X_test` | pandas DataFrames, 68 raw (unscaled) feature columns |
 | `y_train, y_val, y_test` | pandas Series, 1 = attack, 0 = benign |
+| `type_train, type_val, type_test` | pandas Series with the attack type (`"BENIGN"`, `"DoS Hulk"`, …), same rows as `y_*`. Useful to say *which* attacks evaded or were explained |
 | `FEATURES` | list of the 68 column names |
 | `CONT_COLS`, `FLAG_COLS` | continuous columns (more than 2 distinct values in train) and the 0/1 flag columns |
 | `TRAIN_STD`, `TRAIN_MEDIAN` | pandas Series, one value per feature, **measured on `X_train` only** |
@@ -229,6 +230,7 @@ else may write a stand-in with the same signature.
 | `CORR` | `X_train.corr().abs()`, the 68 × 68 correlation table (used by E2 and F1) |
 | `ATTACK_IDX` | positions in `X_test` of the **50 test flows the forest is most confident are attacks**, among true attacks it detects (used by C2, E1, F1) |
 | `EXPLAIN_IDX` | 500 random positions in `X_test`, seed 42 (D1 uses all 500, D2 the first 200) |
+| `rf_proba_test` | the forest's attack probability for every test flow (numpy array) |
 
 **Made by the lab steps:**
 
@@ -263,7 +265,7 @@ start as soon as the setup notebook is on `main`.
 |---|---|---|---|---|
 | T1 | Kickoff | Agree on sections 1.3 and 2, pick tracks, create branches. After this, nobody waits for anybody | – | ☐ |
 | T2 | Environment, data, assembly script | Everyone can install the same libraries and has `clean.csv`; `assemble.py` knows this lab's step order | T1 | ☑ (local machine; teammates still create their own `.venv`) |
-| T3 | Setup notebook (step A0) | Load, split, train and cache the three models, build every shared name in section 2.3 | T2 | ☐ |
+| T3 | Setup notebook (step A0) | Load, split, train and cache the three models, build every shared name in section 2.3 | T2 | ☑ (merge to `main` still to do) |
 | T4 | Feature-name cheat sheet | One table: our 68 names, what each measures in plain words, its group from C1. Helps everyone read results | T2 | ☐ |
 
 ### Part A: the baseline
@@ -466,30 +468,33 @@ assembly script builds a notebook.
 **Why:** Every part notebook starts by running this one, so it must be on `main` first. It also holds
 the lab's Section 4 ("re-run your Lab 1 loading and cleaning … then train the three models").
 
-**Background:** Training the forest on 268,000 rows takes a few minutes. We do it once and save the
+**Background:** Training the forest on 268,000 rows takes about 15 minutes on a 4-core machine. We do it once and save the
 model to `models/` with `joblib.dump`; later runs load it with `joblib.load`. The assembled notebook
 must still train from scratch if `models/` is empty, so write "load if the file exists, otherwise train
 and save".
 
-- [ ] `# STEP A0` cell 1: `%pip install -q shap lime` (needed in Colab, harmless locally) and all
-      imports.
-- [ ] If the working directory is `parts/`, `os.chdir("..")`, so paths mean the same thing in the part
+- [x] `# STEP A0` cell 1: installs shap and lime **only if they are missing** (Colab). A plain
+      `%pip install` fails in a `uv` environment, which has no pip. Then all imports.
+- [x] If the working directory is `parts/`, `os.chdir("..")`, so paths mean the same thing in the part
       notebooks and the final notebook.
-- [ ] Load `data/processed/clean.csv`. `y = (Label != "BENIGN").astype(int)`, `X` = every other column.
-- [ ] Split exactly like `lab1_pipeline/prepare.py` (stratify on the **attack type** `Label`, not on
+- [x] Load `data/processed/clean.csv`. `y = (Label != "BENIGN").astype(int)`, `X` = every other column.
+- [x] Split exactly like `lab1_pipeline/prepare.py` (stratify on the **attack type** `Label`, not on
       `y`; `test_size=0.20`, then `test_size=0.25`; `random_state=42`). Assert the sizes in section 1.1.
-- [ ] `FEATURES`, `CONT_COLS`, `FLAG_COLS` (more than 2 distinct values in `X_train` → continuous),
-      `TRAIN_STD = X_train.std()`, `TRAIN_MEDIAN = X_train.median()`, `CORR = X_train.corr().abs()`.
-- [ ] `report(model, X, y)`: uses `model.predict` and `model.predict_proba(X)[:, 1]`; returns
+- [x] `FEATURES`, `CONT_COLS`, `FLAG_COLS` (more than 2 distinct values in `X_train` → continuous),
+      `TRAIN_STD = X_train.std()`, `TRAIN_MEDIAN = X_train.median()`, `CORR` (computed with
+      `np.corrcoef`: same numbers as `X_train.corr().abs()`, 7× faster).
+- [x] `report(model, X, y)`: uses `model.predict` and `model.predict_proba(X)[:, 1]`; returns
       accuracy, macro-F1 (`f1_score(..., average="macro")`), recall, ROC-AUC, **PR-AUC**
       (`average_precision_score`) and FAR (`FP / (FP + TN)` from `confusion_matrix`; Lab 1's
       `lab1_pipeline/metrics.py` has a `false_alarm_rate` you can copy).
-- [ ] Train (or load) `tree`, `logreg`, `rf` with the settings in section 1.3; put them in `MODELS`.
-- [ ] `ATTACK_IDX`: among test flows with `y_test == 1` and forest prediction 1, the 50 with the
+- [x] Train (or load) `tree`, `logreg`, `rf` with the settings in section 1.3; put them in `MODELS`.
+- [x] `ATTACK_IDX`: among test flows with `y_test == 1` and forest prediction 1, the 50 with the
       highest forest probability.
-- [ ] `EXPLAIN_IDX = np.random.default_rng(SEED).choice(len(X_test), 500, replace=False)`.
-- [ ] Print a short summary at the end (sizes, attack rate, model files loaded or trained).
-- [ ] Merge to `main` the same day.
+- [x] `EXPLAIN_IDX = np.random.default_rng(SEED).choice(len(X_test), 500, replace=False)`.
+- [x] Print a short summary (sizes, attack rate, models loaded or trained) and assert that every
+      shared name exists. The models are **scored in A2**, not here: scoring the forest twice over the
+      test set made setup about 40 s slower.
+- [ ] Merge to `main` the same day (git, done by you).
 
 **Pitfalls:**
 - `ATTACK_IDX` and `EXPLAIN_IDX` are **positions** (use `X_test.iloc[...]`), not index labels.
@@ -498,7 +503,19 @@ and save".
   DataFrames (wrap with `pd.DataFrame(arr, columns=FEATURES)` where needed).
 
 **Done when:** `%run 00_setup.ipynb` from another notebook in `parts/` gives every name in the first
-table of section 2.3, in under a minute when the models are cached.
+table of section 2.3, quickly when the models are cached.
+
+**Result (2026-10-04, `parts/00_setup.ipynb`, 4-core / 9 GB VM):**
+
+| Run | Time |
+|---|---|
+| First run, trains all three models | about 22 min (tree 42 s, logreg 288 s, forest 855 s) |
+| Later runs, models loaded from `models/` | about 1.5 min (reading the CSV ~16 s and the forest's test predictions ~20 s are most of it) |
+
+Clean-test scores from this run, for A2 to confirm: forest macro-F1 0.9968 (identical to Lab 1),
+tree 0.9970, logreg 0.9417. The 50 `ATTACK_IDX` flows all have forest probability **1.000** (25 DDoS,
+22 DoS Hulk, 2 DoS GoldenEye, 1 SSH-Patator). Because they start at 1.000, they are hard to evade,
+so expect a low constrained success rate in C2. `EXPLAIN_IDX` holds 68 attacks among its 500 flows.
 
 #### T4 · Feature-name cheat sheet (Track 3)
 

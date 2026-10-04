@@ -52,3 +52,32 @@ All libraries import with the pinned versions. `clean.csv` matches the SHA-256 i
 `data/README.md`. On two throwaway notebooks in a temporary folder, the script put the cells in
 lab order (A0, C2, F1), dropped the STANDIN cell, listed the missing steps, and ran the result top
 to bottom. The test folder was then deleted, so `parts/` holds only `.gitkeep`.
+
+## 2026-10-04 14:25 EEST: T3, setup notebook (step A0)
+
+**What**
+- `parts/00_setup.ipynb`: created, 14 cells, all marked `STEP A0`, saved with the outputs of a
+  cached run. It installs shap/lime only if missing, loads `data/processed/clean.csv`, rebuilds
+  Lab 1's 60/20/20 split (with asserts on the sizes), and builds the shared names: `FEATURES`,
+  `CONT_COLS` (58), `FLAG_COLS` (10), `TRAIN_STD`, `TRAIN_MEDIAN`, `CORR`, `report()` (adds
+  PR-AUC and FAR), `tree`, `logreg` (scaler inside a Pipeline), `rf` (300 trees, depth 20),
+  `MODELS`, `ATTACK_IDX`, `EXPLAIN_IDX`, `rf_proba_test` and `type_train/val/test`
+- `models/tree.joblib`, `models/logreg.joblib`, `models/forest.joblib`: trained and saved (not in
+  git); the notebook loads them when they match the features, otherwise it retrains
+- `TASKLIST.md`: added `type_*` and `rf_proba_test` to the shared names (section 2.3); T3 ticked
+  apart from the merge, with run times, the clean scores and the `ATTACK_IDX` observation
+
+**Why**
+Task T3: every part notebook starts with `%run 00_setup.ipynb`. Three choices made while testing:
+- One warning is silenced: scikit-learn 1.6.1 passes an option ("iprint") that newer scipy no
+  longer knows, and the warning is harmless.
+- The correlation table uses `np.corrcoef` (42 s down to 6 s, same numbers).
+- The model scoring table moved to step A2, saving about 40 s per run.
+
+**Verified**
+- First run trained all three models in about 22 minutes. Forest macro-F1 0.9968 on the test set,
+  identical to Lab 1.
+- A run with the saved models takes 92 s with no warnings or errors.
+- A test notebook that ran `%run 00_setup.ipynb` from `parts/` got every shared name; the test
+  notebook was then deleted.
+- All 50 `ATTACK_IDX` flows have forest probability 1.000.
