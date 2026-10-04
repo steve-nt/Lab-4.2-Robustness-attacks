@@ -105,3 +105,25 @@ D1 and F1 should be read.
 The script asserts the split size (267,984 training rows) and that every data column has a meaning
 (68 of 68). The proposed groups give 25 Free / 5 Costly / 38 Fixed, the same as the check on
 2026-10-04 13:24. The 10 flag columns have exactly 2 distinct values.
+
+## 2026-10-04 15:01 EEST: A1 and A2, data health and baseline
+
+**What**
+- `parts/10_baseline_noise.ipynb`: created (Track 1 notebook), saved with outputs. Cell 1 is
+  `# STANDIN A0` (`%run 00_setup.ipynb`). A1 prints shapes, the attack share and the finite check
+  for all three parts (with the median-fill fix ready if ever needed), counts continuous and flag
+  columns, and lists negative and heavy-tailed columns. A2 scores `DummyClassifier(constant=0)`,
+  tree, logreg and forest with `report()`, asserts the always-benign accuracy is `1 - y_test.mean()`,
+  and answers the two "Check yourself" questions with the numbers
+- `results/tables/A1_data_health.csv`, `results/tables/A2_baseline.csv`: written by the notebook
+- `TASKLIST.md`: A1 and A2 ticked, with results
+
+**Why**
+Lab steps A1 and A2. The always-benign model is a `DummyClassifier` so it goes through the same
+`report()` as the real models. The negative and heavy-tail check was added because B1 must decide
+whether to clip noise at zero.
+
+**Verified**
+Notebook ran top to bottom in 174 s with no errors. The scores match the T3 run. All
+cells have step markers. `tools/assemble.py --no-execute` places A0, A1, A2 in order. The generated
+notebook was deleted afterwards because it is only built at sync 3.
