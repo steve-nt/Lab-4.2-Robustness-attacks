@@ -1,0 +1,11 @@
+rank,shap_feature,shap_group,mean_abs_shap,in_tried,in_worked,changeable_twins,attacker_tried,attacker_tried_group
+1,Bwd Packet Length Std,Fixed,0.0273,False,False,,Subflow Fwd Packets,Costly
+2,Avg Bwd Segment Size,Fixed,0.0219,False,False,,Total Length of Fwd Packets,Costly
+3,Bwd Packet Length Mean,Fixed,0.0188,False,False,,Fwd Packet Length Max,Free
+4,Average Packet Size,Fixed,0.0168,False,False,,Fwd Header Length,Free
+5,Packet Length Variance,Fixed,0.0156,False,False,,Total Fwd Packets,Costly
+6,Packet Length Std,Fixed,0.0133,False,False,,Subflow Fwd Bytes,Costly
+7,Subflow Bwd Bytes,Fixed,0.0121,False,False,"Total Fwd Packets, Subflow Fwd Packets, act_data_pkt_fwd",Fwd IAT Min,Free
+8,Total Length of Bwd Packets,Fixed,0.0117,False,False,"Total Fwd Packets, Subflow Fwd Packets, act_data_pkt_fwd",Flow IAT Min,Free
+9,Bwd Packet Length Max,Fixed,0.0107,False,False,,Active Std,Free
+10,Init_Win_bytes_backward,Fixed,0.0096,False,False,,Fwd IAT Std,Free

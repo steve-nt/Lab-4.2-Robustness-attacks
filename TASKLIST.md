@@ -295,7 +295,7 @@ start as soon as the setup notebook is on `main`.
 
 | ID | Task | What it is and why | Needs | Done |
 |---|---|---|---|---|
-| D1 | SHAP top-10 vs. attacker top-10 | Is the model leaning on evidence the attacker can fake? | T3 (C1, C3 for the final table) | ☐ |
+| D1 | SHAP top-10 vs. attacker top-10 | Is the model leaning on evidence the attacker can fake? | T3 (C1, C3 for the final table) | ☑ |
 | D2 | Is SHAP stable under noise? | Spearman correlation of SHAP rankings, clean vs. 5% noise | T3 (B1, or a stand-in) | ☐ |
 
 ### Part E: two defences
@@ -833,13 +833,13 @@ because waiting costs the attacker nothing.
 **Why:** If the model's most important features are ones the attacker cannot change (Fixed), the model
 is hard to evade. If they are Free features, it is easy.
 
-- [ ] `explainer = shap.TreeExplainer(rf)`; `sv = explainer(X_test.iloc[EXPLAIN_IDX])`.
-- [ ] Attack class: `sv.values[:, :, 1]` (shape 500 × 68). `shap_rank` = mean of the absolute values
+- [x] `explainer = shap.TreeExplainer(rf)`; `sv = explainer(X_test.iloc[EXPLAIN_IDX])`.
+- [x] Attack class: `sv.values[:, :, 1]` (shape 500 × 68). `shap_rank` = mean of the absolute values
       per feature, sorted descending.
-- [ ] Table: SHAP top 10 with each feature's group, next to C3's attacker top 10. Count the features in
+- [x] Table: SHAP top 10 with each feature's group, next to C3's attacker top 10. Count the features in
       both lists. Save `results/tables/D1_shap_vs_attack.csv` and a SHAP bar plot
       `results/figures/D1_shap_bar.png`.
-- [ ] Markdown: are the most important features ones the attacker can change? What does that say about
+- [x] Markdown: are the most important features ones the attacker can change? What does that say about
       evasion? If a feature is used often by the attack but ranked low by SHAP, what could explain it?
       (Hint: a low-ranked feature can still tip a flow that is already close to 0.5; SHAP ranks the
       average, the attacker exploits single flows.) Also check the mixed twin groups in T4: a Fixed SHAP feature with a
@@ -854,6 +854,21 @@ defender).
 **Done when:** the two lists, their overlap count and the groups are in one table.
 **Goes into the report:** Results (two top-10 lists and overlap); Discussion ("Does the model lean on
 evidence an attacker can fake?").
+
+**Result (2026-10-04, `parts/20_attack.ipynb`):** `results/tables/D1_shap_vs_attack.csv`,
+`results/figures/D1_shap_bar.png` (top 15, bars coloured and labelled by group). TreeSHAP on 500
+flows took about 4 minutes.
+
+- **All ten SHAP top features are Fixed** (victim reply sizes, mixed-direction size statistics,
+  `Init_Win_bytes_backward`); Fixed carries 77% of the total mean |SHAP|.
+- **Overlap 0** with the attacker's top ten, and 0 with the nine features of the successful evasions.
+- The two timing features behind all DDoS evasions rank 41st and 58th in SHAP (the "used often but
+  ranked low" case; three explanations in the notebook).
+- `Subflow Bwd Bytes` and `Total Length of Bwd Packets` (SHAP 7 and 8) have Costly twins: Fixed
+  in name, but partly reachable in real traffic.
+
+Shared names made here: `explainer`, `sv`, `shap_attack` (500 × 68), `shap_rank`. The notebook has a
+`# STANDIN B1` cell with the plot colours, because B1 lives in Track 1's notebook.
 
 #### D2 · Is the explanation stable under noise? (Track 3)
 

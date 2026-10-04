@@ -256,3 +256,29 @@ Notebook ran without errors in 256 s; both asserts pass (22 features changed, no
 run had the group column misaligned: labels were attached by position, and pandas reordered the rows
 by feature name. Fixed by looking up the group per feature after the table is built; checked by the
 new assert.
+
+## 2026-10-04 17:06 EEST: D1, SHAP top 10 compared with the attacker's features
+
+**What**
+- `parts/20_attack.ipynb`: added step D1 (now 29 cells, saved with outputs):
+  - TreeSHAP for the forest on the 500 `EXPLAIN_IDX` flows (`explainer`, `sv`, `shap_attack`,
+    `shap_rank`)
+  - a side-by-side table of the SHAP top 10 and the attacker's top 10, with groups, overlap with
+    "tried" and "worked", and changeable twins
+  - the SHAP rank of every feature the attacker used, and the share of SHAP weight per group
+  - a bar figure, plus the findings and both "Check yourself" answers
+- Also added a `# STANDIN B1` cell with the plot colours, because B1 is in Track 1's notebook
+- `results/tables/D1_shap_vs_attack.csv`, `results/figures/D1_shap_bar.png`: written by the notebook
+- `TASKLIST.md`: D1 ticked, with results
+
+**Why**
+Lab step D1. The comparison uses both attacker lists from C3 ("tried" and "worked"), because they
+differ. The figure colours bars by attacker group, using palette slots 4–6 so they are never
+confused with the model colours. The group is also written next to each bar, because two of the
+colours are below 3:1 contrast.
+
+**Verified**
+Notebook ran without errors (SHAP 132–226 s). All step markers are valid, and
+`tools/assemble.py --no-execute` orders A0–D1 correctly. The generated notebook was deleted, since
+it is only built at sync 3. The figure was checked by eye. Results: SHAP top 10 all Fixed (77% of
+SHAP weight), overlap 0 with both attacker lists.
