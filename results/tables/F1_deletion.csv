@@ -1,0 +1,6 @@
+,,"mean drop, SHAP top-k","mean drop, random-k",fidelity gap,flows below 0.5 after top-k,flows,"mean drop, top-1 alone","mean drop, top-1 + twins","mean drop, top-1 + chained family",below 0.5 alone,below 0.5 with twins,below 0.5 with family
+top-k vs random-k,1,0.2008,0.0278,0.1730,0.0000,,,,,,,
+top-k vs random-k,3,0.4270,0.0941,0.3329,10.0000,,,,,,,
+top-k vs random-k,5,0.5432,0.1496,0.3936,30.0000,,,,,,,
+single vs group,all 50 flows,,,,,50.0000,0.2008,0.2469,0.4380,0.0000,2.0000,11.0000
+single vs group,flows whose top feature has twins,,,,,42.0000,0.1923,0.2471,0.4747,0.0000,2.0000,11.0000

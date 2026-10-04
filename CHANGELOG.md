@@ -379,3 +379,27 @@ exactly 0 or 1, so they cannot answer the lab's question about flows near 0.5.
 Notebook ran without errors (278 s; LIME 12 s). The very low fit scores (mean R² 0.175, all below
 0.70) were cross-checked against Lab 3's LIME results on the same CICIDS data (mean 0.21, none
 above 0.70), so they are not a setup error.
+
+## 2026-10-05 02:39 EEST: F1, deletion test alone and in groups
+
+**What**
+- `parts/30_explanations.ipynb`: added step F1 before F2 (now 25 cells, saved with outputs). The
+  "Part F" heading moved from F2 into F1, which comes first in the hand-in notebook. F1 contains:
+  - SHAP for the 50 `ATTACK_IDX` flows
+  - top-k vs random-k deletion (k = 1, 3, 5; random averaged over 10 draws)
+  - the top feature alone vs with its direct twins (|corr| > 0.95) vs with its chained twin family
+  - a figure, the written findings, and the "Check yourself" answer
+- `results/tables/F1_deletion.csv`, `F1_deletion_per_flow.csv`, `results/figures/F1_deletion.png`:
+  written by the notebook
+- `TASKLIST.md`: F1 ticked, with results
+
+**Why**
+Lab step F1. The chained-family variant was added because 39 of the 50 flows have
+`Bwd Packet Length Std` as their top feature, which has only one direct twin. The lab's group
+therefore understates the redundancy: 0.25 vs 0.47 drop with the full family. Figure colours are
+palette slots 7–8 (validated), so they are not confused with the model colours in earlier figures.
+
+**Verified**
+The first run with the family variant failed: in pandas 3, `to_numpy()` returned a read-only view
+and `np.fill_diagonal` could not write into it. Fixed with `to_numpy(copy=True)`; the next run had
+no errors (527 s). The figure was checked by eye. `tools/assemble.py --no-execute` finds F1.

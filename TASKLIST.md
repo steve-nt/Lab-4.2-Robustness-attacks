@@ -309,7 +309,7 @@ start as soon as the setup notebook is on `main`.
 
 | ID | Task | What it is and why | Needs | Done |
 |---|---|---|---|---|
-| F1 | Deletion test, alone and in groups | Top-k vs. random-k (fidelity); single vs. group (redundancy) | T3 | ☐ |
+| F1 | Deletion test, alone and in groups | Top-k vs. random-k (fidelity); single vs. group (redundancy) | T3 | ☑ |
 | F2 | Do the SHAP numbers add up? | Base value + SHAP values = model output, for 5 flows | T3 | ☑ |
 | F3 | How well does LIME fit? | LIME's R² on 20 flows; which flows fit worst | T3 | ☑ |
 
@@ -1002,15 +1002,15 @@ in both loops. Use `n_jobs=-1`.
 replacing it with an ordinary value must lower the attack probability, clearly more than replacing
 random features.
 
-- [ ] Flows: `X_test.iloc[ATTACK_IDX]` (the 50 detected attacks, shared with C2). SHAP values for them,
+- [x] Flows: `X_test.iloc[ATTACK_IDX]` (the 50 detected attacks, shared with C2). SHAP values for them,
       class 1.
-- [ ] For k = 1, 3, 5, per flow: `top = np.argsort(-shap_row)[:k]` (the PDF's hint), set those features
+- [x] For k = 1, 3, 5, per flow: `top = np.argsort(-shap_row)[:k]` (the PDF's hint), set those features
       to `TRAIN_MEDIAN`, record the probability drop. Do the same for k random features (seeded `rng`;
       average over a few random draws for a steadier number). Print mean drop, top-k vs. random-k.
-- [ ] Group version: for each flow, the top-ranked feature **plus every feature with `CORR` > 0.95 to
+- [x] Group version: for each flow, the top-ranked feature **plus every feature with `CORR` > 0.95 to
       it**, all set to medians. Compare with the single top-1 drop.
-- [ ] Save `results/tables/F1_deletion.csv`; optional bar chart `results/figures/F1_deletion.png`.
-- [ ] Markdown: removing the top feature alone barely moved the score, but the group did. Was SHAP
+- [x] Save `results/tables/F1_deletion.csv`; optional bar chart `results/figures/F1_deletion.png`.
+- [x] Markdown: removing the top feature alone barely moved the score, but the group did. Was SHAP
       wrong, or the test?
 
 **Pitfalls:** For the group version, `results/tables/T4_feature_glossary.md` lists all 14 twin groups
@@ -1022,6 +1022,18 @@ drop.
 
 **Done when:** the table shows top-k, random-k (k = 1, 3, 5) and single vs. group.
 **Goes into the report:** Results (fidelity table); Discussion.
+
+**Result (2026-10-05, `parts/30_explanations.ipynb`):** `results/tables/F1_deletion.csv`,
+`F1_deletion_per_flow.csv`, `results/figures/F1_deletion.png`. Random-k averaged over 10 draws per
+flow.
+
+- **Fidelity is good.** Mean drop for top-k vs random-k: 0.20 vs 0.03 (k = 1), 0.43 vs 0.09 (k = 3),
+  0.54 vs 0.15 (k = 5). The top 5 push 30 of the 50 flows below 0.5.
+- **Redundancy.** `Bwd Packet Length Std` is the top feature for 39 flows. For the 42 flows whose top
+  feature has twins, the mean drop is 0.19 alone, 0.25 with its direct twins (the lab's group) and
+  **0.47 with its whole chained family** (T4 group). Flows below 0.5: 0, 2 and 11.
+- The chained-family variant was added because the lab's direct-twin group understates the effect
+  (most top features have only one direct twin).
 
 #### F2 · Do the numbers add up?
 
