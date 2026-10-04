@@ -206,3 +206,31 @@ Notebook ran without errors in 96 s. Asserts pass: groups 25 Free / 5 Costly / 3
 `can_change` is False for every Fixed feature and for any decrease, and True for increases of Free
 and Costly features. The first run labelled `Total Length of Fwd Packets` as "packets" in the
 units column; fixed to "bytes" and re-run.
+
+## 2026-10-04 16:31 EEST: C2, greedy evasion attack (constrained and unconstrained)
+
+**What**
+- `parts/20_attack.ipynb`: added step C2 (now 18 cells, saved with outputs):
+  - `greedy_attack(model, x_row, constrained=True, steps=5, cap=False)`: one batched
+    `predict_proba` per step; stops when nothing helps or once p < 0.5
+  - three runs on the 50 `ATTACK_IDX` flows against the forest: constrained, unconstrained, and
+    constrained + cap at the training maximum
+  - an audit that `X_test` is untouched, that no Fixed feature changed and no value decreased in the
+    constrained runs, and that capped values stay at or below the training maximum
+  - the comparison tables, evasions per attack type, the features each run used, and the written
+    findings with the "customer vs. security team" answer
+- `results/tables/C2_attack_comparison.csv`, `results/tables/C2_attack_per_flow.csv`: written by the
+  notebook
+- `TASKLIST.md`: C2 ticked, with results; `attack_runs` and `adv_rows` added to the shared names
+
+**Why**
+Lab step C2. Stopping at p < 0.5 was chosen because the attacker has won at that point, and
+continuing would inflate "features changed". The cap run was added to check C1's note on the
+physically impossible header steps. It shows they make no difference for tree models.
+
+**Verified**
+Notebook ran without errors in 242 s. All audits pass. Results: constrained 9/50 evaded, unconstrained
+50/50 (87% of its steps on Fixed features), cap run identical to constrained. The first draft
+contained an assert that could never fail (`... or True`); it was replaced with a real check before
+the final run. Two figures in the write-up were corrected against the output (2–4 changes, not 2–3;
+`Flow IAT Min` step 1.6 s).

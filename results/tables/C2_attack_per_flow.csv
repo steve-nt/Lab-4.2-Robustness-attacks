@@ -1,0 +1,151 @@
+run,test_position,attack_type,p_before,p_after,evaded,steps_taken,n_features_changed,changed
+constrained,6,DDoS,1.0000,0.7667,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
+constrained,7,DoS Hulk,1.0000,0.8467,False,5,4,Subflow Fwd Packets;Total Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets
+constrained,11,DDoS,1.0000,0.8567,False,5,4,Subflow Fwd Packets;Total Fwd Packets;Total Length of Fwd Packets;Fwd Header Length;Total Length of Fwd Packets
+constrained,14,DoS GoldenEye,1.0000,0.4767,True,4,4,Total Fwd Packets;Fwd Header Length;Subflow Fwd Packets;Fwd IAT Std
+constrained,19,DoS Hulk,1.0000,0.8200,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Fwd Header Length
+constrained,31,SSH-Patator,1.0000,0.6833,False,5,5,Flow IAT Std;Flow IAT Max;Active Min;act_data_pkt_fwd;Active Max
+constrained,40,DoS Hulk,1.0000,0.8200,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Active Std
+constrained,43,DoS Hulk,1.0000,0.7167,False,5,5,Fwd Packet Length Max;Subflow Fwd Packets;Total Length of Fwd Packets;act_data_pkt_fwd;Subflow Fwd Bytes
+constrained,52,DoS Hulk,1.0000,0.8333,False,5,4,Subflow Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Fwd Header Length
+constrained,57,DDoS,1.0000,0.7667,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
+constrained,63,DoS Hulk,1.0000,0.8233,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Fwd Packet Length Std
+constrained,73,DDoS,1.0000,0.4233,True,4,4,Fwd IAT Min;Flow IAT Min;Fwd IAT Mean;Flow IAT Mean
+constrained,79,DoS Hulk,1.0000,0.5233,False,5,5,Fwd IAT Total;Fwd IAT Max;Fwd IAT Mean;Flow IAT Max;Fwd IAT Std
+constrained,95,DoS GoldenEye,1.0000,0.4800,True,4,4,Total Fwd Packets;Subflow Fwd Packets;Fwd Header Length;Fwd IAT Std
+constrained,97,DDoS,1.0000,0.7100,False,5,5,Subflow Fwd Packets;Total Length of Fwd Packets;Total Fwd Packets;Fwd Header Length;Subflow Fwd Bytes
+constrained,103,DDoS,1.0000,0.4167,True,2,2,Fwd IAT Min;Flow IAT Min
+constrained,109,DoS Hulk,1.0000,0.8067,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Active Std
+constrained,128,DoS Hulk,1.0000,0.7567,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Subflow Fwd Bytes;Total Length of Fwd Packets
+constrained,132,DDoS,1.0000,0.7567,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
+constrained,149,DoS Hulk,1.0000,0.8267,False,5,4,Fwd Packet Length Max;Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Packet Length Max;Fwd Header Length
+constrained,150,DoS Hulk,1.0000,0.8567,False,5,4,Subflow Fwd Packets;Total Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets
+constrained,151,DDoS,1.0000,0.7133,False,5,5,Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Header Length;Total Fwd Packets;Subflow Fwd Bytes
+constrained,164,DDoS,1.0000,0.7233,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
+constrained,177,DDoS,1.0000,0.4833,True,3,3,Fwd IAT Min;Flow IAT Min;Fwd Packet Length Mean
+constrained,178,DoS Hulk,1.0000,0.8333,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Active Std
+constrained,185,DDoS,1.0000,0.7367,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
+constrained,188,DDoS,1.0000,0.7633,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
+constrained,196,DDoS,1.0000,0.8667,False,5,4,Subflow Fwd Packets;Total Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Length of Fwd Packets
+constrained,198,DoS Hulk,1.0000,0.8167,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Fwd Header Length
+constrained,204,DoS Hulk,1.0000,0.8333,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Header Length
+constrained,212,DoS Hulk,1.0000,0.8333,False,5,4,Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Fwd Header Length
+constrained,221,DoS Hulk,1.0000,0.8333,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Header Length
+constrained,226,DDoS,1.0000,0.4267,True,2,2,Fwd IAT Min;Flow IAT Min
+constrained,236,DoS Hulk,1.0000,0.8267,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Header Length
+constrained,243,DoS Hulk,1.0000,0.8067,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Active Std
+constrained,250,DoS Hulk,1.0000,0.8567,False,5,4,Subflow Fwd Packets;Total Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets
+constrained,260,DDoS,1.0000,0.7567,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
+constrained,276,DoS Hulk,1.0000,0.8267,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Fwd Packet Length Std
+constrained,283,DDoS,1.0000,0.4100,True,2,2,Fwd IAT Min;Flow IAT Min
+constrained,295,DDoS,1.0000,0.4800,True,3,3,Fwd IAT Min;Flow IAT Min;Fwd Packet Length Mean
+constrained,299,DDoS,1.0000,0.8667,False,5,5,Subflow Fwd Packets;Total Fwd Packets;Fwd Header Length;Fwd Packet Length Min;Total Length of Fwd Packets
+constrained,306,DoS Hulk,1.0000,0.8400,False,5,4,Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Fwd Packet Length Max;Active Std
+constrained,313,DDoS,1.0000,0.8600,False,5,5,Subflow Fwd Packets;Total Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Fwd Packet Length Min
+constrained,317,DDoS,1.0000,0.4833,True,3,3,Fwd IAT Min;Flow IAT Min;Fwd Packet Length Mean
+constrained,327,DDoS,1.0000,0.8600,False,5,5,Subflow Fwd Packets;Total Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Fwd Packet Length Min
+constrained,331,DoS Hulk,1.0000,0.8233,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Header Length
+constrained,337,DDoS,1.0000,0.7633,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
+constrained,341,DDoS,1.0000,0.7600,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
+constrained,344,DDoS,1.0000,0.7500,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
+constrained,352,DDoS,1.0000,0.7567,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
+unconstrained,6,DDoS,1.0000,0.3467,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Total Backward Packets
+unconstrained,7,DoS Hulk,1.0000,0.4733,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,11,DDoS,1.0000,0.4400,True,3,3,Subflow Bwd Bytes;Total Backward Packets;Subflow Bwd Packets
+unconstrained,14,DoS GoldenEye,1.0000,0.4667,True,3,3,Fwd Header Length;min_seg_size_forward;Init_Win_bytes_forward
+unconstrained,19,DoS Hulk,1.0000,0.4633,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,31,SSH-Patator,1.0000,0.4939,True,2,2,Bwd Header Length;Total Backward Packets
+unconstrained,40,DoS Hulk,1.0000,0.4667,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,43,DoS Hulk,1.0000,0.4933,True,2,2,Subflow Bwd Bytes;Total Length of Bwd Packets
+unconstrained,52,DoS Hulk,1.0000,0.4633,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,57,DDoS,1.0000,0.3500,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Total Backward Packets
+unconstrained,63,DoS Hulk,1.0000,0.4567,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,73,DDoS,1.0000,0.4067,True,1,1,Init_Win_bytes_forward
+unconstrained,79,DoS Hulk,1.0000,0.4900,True,3,3,Init_Win_bytes_backward;Init_Win_bytes_forward;Packet Length Std
+unconstrained,95,DoS GoldenEye,1.0000,0.4467,True,3,3,Fwd Header Length;min_seg_size_forward;Init_Win_bytes_forward
+unconstrained,97,DDoS,1.0000,0.4867,True,2,2,Subflow Bwd Bytes;Total Length of Bwd Packets
+unconstrained,103,DDoS,1.0000,0.4167,True,2,2,Fwd IAT Min;Flow IAT Min
+unconstrained,109,DoS Hulk,1.0000,0.4467,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,128,DoS Hulk,1.0000,0.4867,True,2,2,Subflow Bwd Bytes;Total Backward Packets
+unconstrained,132,DDoS,1.0000,0.3133,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Total Backward Packets
+unconstrained,149,DoS Hulk,1.0000,0.4767,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,150,DoS Hulk,1.0000,0.4700,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,151,DDoS,1.0000,0.4867,True,2,2,Subflow Bwd Bytes;Total Length of Bwd Packets
+unconstrained,164,DDoS,1.0000,0.4900,True,2,2,Subflow Bwd Bytes;Total Length of Bwd Packets
+unconstrained,177,DDoS,1.0000,0.4433,True,3,3,Bwd Packets/s;Fwd IAT Min;Flow IAT Min
+unconstrained,178,DoS Hulk,1.0000,0.4633,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,185,DDoS,1.0000,0.3267,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Total Backward Packets
+unconstrained,188,DDoS,1.0000,0.3433,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Total Backward Packets
+unconstrained,196,DDoS,1.0000,0.4267,True,3,3,Subflow Bwd Bytes;Total Backward Packets;Subflow Bwd Packets
+unconstrained,198,DoS Hulk,1.0000,0.4467,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,204,DoS Hulk,1.0000,0.4700,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,212,DoS Hulk,1.0000,0.4633,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,221,DoS Hulk,1.0000,0.4700,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,226,DDoS,1.0000,0.4267,True,2,2,Fwd IAT Min;Flow IAT Min
+unconstrained,236,DoS Hulk,1.0000,0.4667,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,243,DoS Hulk,1.0000,0.4533,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,250,DoS Hulk,1.0000,0.4667,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,260,DDoS,1.0000,0.3133,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Total Backward Packets
+unconstrained,276,DoS Hulk,1.0000,0.4600,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,283,DDoS,1.0000,0.4100,True,2,2,Fwd IAT Min;Flow IAT Min
+unconstrained,295,DDoS,1.0000,0.4033,True,3,3,Fwd IAT Min;Flow IAT Min;Fwd IAT Std
+unconstrained,299,DDoS,1.0000,0.4267,True,3,3,Subflow Bwd Bytes;Total Backward Packets;Subflow Bwd Packets
+unconstrained,306,DoS Hulk,1.0000,0.4600,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,313,DDoS,1.0000,0.4633,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,317,DDoS,1.0000,0.3967,True,3,3,Fwd IAT Min;Flow IAT Min;Fwd IAT Std
+unconstrained,327,DDoS,1.0000,0.4200,True,3,3,Subflow Bwd Bytes;Total Backward Packets;Subflow Bwd Packets
+unconstrained,331,DoS Hulk,1.0000,0.4800,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Init_Win_bytes_backward
+unconstrained,337,DDoS,1.0000,0.3500,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Total Backward Packets
+unconstrained,341,DDoS,1.0000,0.3433,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Total Backward Packets
+unconstrained,344,DDoS,1.0000,0.3200,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Total Backward Packets
+unconstrained,352,DDoS,1.0000,0.3167,True,3,3,Subflow Bwd Bytes;Total Length of Bwd Packets;Total Backward Packets
+constrained + cap,6,DDoS,1.0000,0.7667,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
+constrained + cap,7,DoS Hulk,1.0000,0.8467,False,5,4,Subflow Fwd Packets;Total Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets
+constrained + cap,11,DDoS,1.0000,0.8567,False,5,4,Subflow Fwd Packets;Total Fwd Packets;Total Length of Fwd Packets;Fwd Header Length;Total Length of Fwd Packets
+constrained + cap,14,DoS GoldenEye,1.0000,0.4767,True,4,4,Total Fwd Packets;Fwd Header Length;Subflow Fwd Packets;Fwd IAT Std
+constrained + cap,19,DoS Hulk,1.0000,0.8200,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Fwd Header Length
+constrained + cap,31,SSH-Patator,1.0000,0.6833,False,5,5,Flow IAT Std;Flow IAT Max;Active Min;act_data_pkt_fwd;Active Max
+constrained + cap,40,DoS Hulk,1.0000,0.8200,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Active Std
+constrained + cap,43,DoS Hulk,1.0000,0.7167,False,5,5,Fwd Packet Length Max;Subflow Fwd Packets;Total Length of Fwd Packets;act_data_pkt_fwd;Subflow Fwd Bytes
+constrained + cap,52,DoS Hulk,1.0000,0.8333,False,5,4,Subflow Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Fwd Header Length
+constrained + cap,57,DDoS,1.0000,0.7667,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
+constrained + cap,63,DoS Hulk,1.0000,0.8233,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Fwd Packet Length Std
+constrained + cap,73,DDoS,1.0000,0.4233,True,4,4,Fwd IAT Min;Flow IAT Min;Fwd IAT Mean;Flow IAT Mean
+constrained + cap,79,DoS Hulk,1.0000,0.5233,False,5,5,Fwd IAT Total;Fwd IAT Max;Fwd IAT Mean;Flow IAT Max;Fwd IAT Std
+constrained + cap,95,DoS GoldenEye,1.0000,0.4800,True,4,4,Total Fwd Packets;Subflow Fwd Packets;Fwd Header Length;Fwd IAT Std
+constrained + cap,97,DDoS,1.0000,0.7100,False,5,5,Subflow Fwd Packets;Total Length of Fwd Packets;Total Fwd Packets;Fwd Header Length;Subflow Fwd Bytes
+constrained + cap,103,DDoS,1.0000,0.4167,True,2,2,Fwd IAT Min;Flow IAT Min
+constrained + cap,109,DoS Hulk,1.0000,0.8067,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Active Std
+constrained + cap,128,DoS Hulk,1.0000,0.7567,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Subflow Fwd Bytes;Total Length of Fwd Packets
+constrained + cap,132,DDoS,1.0000,0.7567,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
+constrained + cap,149,DoS Hulk,1.0000,0.8267,False,5,4,Fwd Packet Length Max;Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Packet Length Max;Fwd Header Length
+constrained + cap,150,DoS Hulk,1.0000,0.8567,False,5,4,Subflow Fwd Packets;Total Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets
+constrained + cap,151,DDoS,1.0000,0.7133,False,5,5,Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Header Length;Total Fwd Packets;Subflow Fwd Bytes
+constrained + cap,164,DDoS,1.0000,0.7233,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
+constrained + cap,177,DDoS,1.0000,0.4833,True,3,3,Fwd IAT Min;Flow IAT Min;Fwd Packet Length Mean
+constrained + cap,178,DoS Hulk,1.0000,0.8333,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Active Std
+constrained + cap,185,DDoS,1.0000,0.7367,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
+constrained + cap,188,DDoS,1.0000,0.7633,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
+constrained + cap,196,DDoS,1.0000,0.8667,False,5,4,Subflow Fwd Packets;Total Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Length of Fwd Packets
+constrained + cap,198,DoS Hulk,1.0000,0.8167,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Fwd Header Length
+constrained + cap,204,DoS Hulk,1.0000,0.8333,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Header Length
+constrained + cap,212,DoS Hulk,1.0000,0.8333,False,5,4,Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Fwd Header Length
+constrained + cap,221,DoS Hulk,1.0000,0.8333,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Header Length
+constrained + cap,226,DDoS,1.0000,0.4267,True,2,2,Fwd IAT Min;Flow IAT Min
+constrained + cap,236,DoS Hulk,1.0000,0.8267,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Header Length
+constrained + cap,243,DoS Hulk,1.0000,0.8067,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Active Std
+constrained + cap,250,DoS Hulk,1.0000,0.8567,False,5,4,Subflow Fwd Packets;Total Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets
+constrained + cap,260,DDoS,1.0000,0.7567,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
+constrained + cap,276,DoS Hulk,1.0000,0.8267,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Fwd Packet Length Std
+constrained + cap,283,DDoS,1.0000,0.4100,True,2,2,Fwd IAT Min;Flow IAT Min
+constrained + cap,295,DDoS,1.0000,0.4800,True,3,3,Fwd IAT Min;Flow IAT Min;Fwd Packet Length Mean
+constrained + cap,299,DDoS,1.0000,0.8667,False,5,5,Subflow Fwd Packets;Total Fwd Packets;Fwd Header Length;Fwd Packet Length Min;Total Length of Fwd Packets
+constrained + cap,306,DoS Hulk,1.0000,0.8400,False,5,4,Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Fwd Packet Length Max;Active Std
+constrained + cap,313,DDoS,1.0000,0.8600,False,5,5,Subflow Fwd Packets;Total Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Fwd Packet Length Min
+constrained + cap,317,DDoS,1.0000,0.4833,True,3,3,Fwd IAT Min;Flow IAT Min;Fwd Packet Length Mean
+constrained + cap,327,DDoS,1.0000,0.8600,False,5,5,Subflow Fwd Packets;Total Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Fwd Packet Length Min
+constrained + cap,331,DoS Hulk,1.0000,0.8233,False,5,4,Fwd Packet Length Max;Fwd Packet Length Max;Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Header Length
+constrained + cap,337,DDoS,1.0000,0.7633,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
+constrained + cap,341,DDoS,1.0000,0.7600,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
+constrained + cap,344,DDoS,1.0000,0.7500,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
+constrained + cap,352,DDoS,1.0000,0.7567,False,5,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes

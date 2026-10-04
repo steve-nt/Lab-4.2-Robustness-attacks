@@ -241,6 +241,7 @@ else may write a stand-in with the same signature.
 | `GROUP` | `dict`: feature name → `"Free"`, `"Costly"` or `"Fixed"` | C1 | C2, C3, D1, E1 |
 | `can_change` | `can_change(feature, old_value, new_value) -> bool` | C1 | C2 |
 | `greedy_attack` | `greedy_attack(model, x_row, constrained=True, steps=5) -> dict` with keys `p_before`, `p_after`, `changed` (list of feature names, one per step taken), `x_adv` (the edited row) | C2 | C3, E1, X4 |
+| `attack_runs`, `adv_rows` | dicts keyed by run (`"constrained"`, `"unconstrained"`, `"constrained + cap"`): per-flow results (DataFrame with `p_before`, `p_after`, `evaded`, `changed`, …) and the edited rows, in `ATTACK_IDX` order | C2 | C3, E1, X4 |
 | `attack_counts` | pandas Series: feature → how often the constrained attack changed it | C3 | D1 |
 | `shap_rank` | pandas Series: feature → mean \|SHAP\| on the 500 flows, sorted | D1 | (report) |
 | `gb`, `ensemble` | gradient boosting model, averaging ensemble (has `predict_proba`, `predict`) | E1 | – |
@@ -287,7 +288,7 @@ start as soon as the setup notebook is on `main`.
 | ID | Task | What it is and why | Needs | Done |
 |---|---|---|---|---|
 | C1 | Sort the features, set the budget | `GROUP`, `can_change`, step size 0.5 × std, at most 5 changes | T3 | ☑ |
-| C2 | Run the attack twice | Greedy attack on `ATTACK_IDX`, constrained and unconstrained, side by side | C1 | ☐ |
+| C2 | Run the attack twice | Greedy attack on `ATTACK_IDX`, constrained and unconstrained, side by side | C1 | ☑ |
 | C3 | See what the attack touched | Top-10 most changed features and their groups; no Fixed feature may appear | C2 | ☐ |
 
 ### Part D: does SHAP point where the attacker goes?
@@ -747,18 +748,18 @@ probability of all candidates **in one `predict_proba` call**, and keep the cand
 probability. Stop early if no candidate lowers the probability. Success = the final probability is
 below 0.5.
 
-- [ ] `greedy_attack(model, x_row, constrained=True, steps=5)` returning the dict in section 2.3.
+- [x] `greedy_attack(model, x_row, constrained=True, steps=5)` returning the dict in section 2.3.
   - `x_row` is one row as a DataFrame (`X_test.iloc[[i]]`); **copy it** before editing.
   - Constrained: candidates = features with `GROUP` Free or Costly, value `+ STEP_SIZE`, accepted only
     if `can_change` says yes, at most `MAX_CHANGES` distinct features changed.
   - Unconstrained: every feature, both `+ STEP_SIZE` and `− STEP_SIZE`, no group or direction check.
     Keep the same step size and 5 steps, so the **only** difference is the network constraints. Write
     this choice in a comment and in the report.
-- [ ] Run both versions on the 50 flows in `ATTACK_IDX` against `rf`.
-- [ ] One side-by-side table: evaded (out of 50), mean probability before, mean after, mean number of
+- [x] Run both versions on the 50 flows in `ATTACK_IDX` against `rf`.
+- [x] One side-by-side table: evaded (out of 50), mean probability before, mean after, mean number of
       features changed. Save `results/tables/C2_attack_comparison.csv`. Keep the per-flow results too
       (`C2_attack_per_flow.csv`), C3 needs them.
-- [ ] Markdown: the gap between the runs is protection from the network, not from the model. Which
+- [x] Markdown: the gap between the runs is protection from the network, not from the model. Which
       number would you quote to a customer, and which to your security team?
 
 **Pitfalls:**
@@ -774,6 +775,25 @@ succeeds on some; those are the interesting ones.
 **Done when:** both runs finished and the table exists.
 **Goes into the report:** Results (side-by-side table); Discussion ("How much robustness comes from the
 network?").
+
+**Result (2026-10-04, `parts/20_attack.ipynb`):** `results/tables/C2_attack_comparison.csv` and
+`C2_attack_per_flow.csv`. The attack stops when nothing helps **or** as soon as p < 0.5. A third run,
+"constrained + cap" (no value above its training maximum), checks C1's impossible-step note.
+
+| Run | Evaded (of 50) | Mean p after | Mean features changed |
+|---|---|---|---|
+| constrained | 9 | 0.731 | 4.22 |
+| unconstrained | 50 | 0.431 | 2.78 |
+| constrained + cap | 9 | 0.731 | 4.22 |
+
+- Unconstrained: 87% of its steps change Fixed features (victim reply bytes, `Init_Win_bytes_backward`).
+- Constrained: 7 of 25 DDoS and 2 of 2 DoS GoldenEye, 0 of 22 DoS Hulk. The DDoS ones only waited
+  longer (`Fwd IAT Min` +4.8 s, `Flow IAT Min` +1.6 s per step). All nine end at p 0.41–0.48.
+- The cap changes nothing: tree thresholds never lie above the training maximum.
+
+Audit passed: no Fixed feature changed and no value decreased; `X_test` unchanged. Shared names made
+here: `greedy_attack`, `attack_runs` (run → per-flow DataFrame), `adv_rows` (run → edited rows, same
+order as `ATTACK_IDX`), `TRAIN_MAX`, `FEATURE_POS`.
 
 #### C3 · See what the attack touched
 
