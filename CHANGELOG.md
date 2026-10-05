@@ -403,3 +403,30 @@ palette slots 7–8 (validated), so they are not confused with the model colours
 The first run with the family variant failed: in pandas 3, `to_numpy()` returned a read-only view
 and `np.fill_diagonal` could not write into it. Fixed with `to_numpy(copy=True)`; the next run had
 no errors (527 s). The figure was checked by eye. `tools/assemble.py --no-execute` finds F1.
+
+## 2026-10-05 03:26 EEST: E2, single vs group vs block feature removal
+
+**What**
+- `parts/30_explanations.ipynb`: added step E2 before F1 (now 32 cells, saved with outputs):
+  - a fixed stratified 30,000-row training sample, with `forest_score()` (100 trees, depth 20)
+  - a reference forest trained with 6 seeds as a noise band
+  - 68 single-feature removals and 14 correlation-group removals (|corr| > 0.95, chained)
+  - 7 whole-block removals: all backward / forward / timing / size / flag features, and the largest
+    groups at 0.90 and 0.80
+  - a figure, the written findings, and the "Check yourself" answer
+- `results/tables/E2_single_removal.csv`, `E2_group_removal.csv`, `E2_block_removal.csv`,
+  `results/figures/E2_single_vs_group.png`: written by the notebook
+- `TASKLIST.md`: E2 ticked, with results
+
+**Why**
+Lab step E2. The noise band and the block removals were added because the result went against the
+lab's expectation: every group removal was inside training noise (≤ 0.0006 vs a band of 0.0008).
+They answer how much has to be removed before it hurts: at most 0.0025 even without all 20 forward
+features. The first figure (group vs best single member) showed nothing but noise and its legend
+covered data, so it was replaced by a chart of single vs group vs block costs.
+
+**Verified**
+The block numbers were first probed in a separate script, then matched exactly by the notebook. The
+final run had no errors (32 cells). The figure was checked by eye twice; the second check found the
+legend overlapping the title, so it was moved inside the plot and the notebook re-run.
+`tools/assemble.py --no-execute` finds every lab step A0–F3.

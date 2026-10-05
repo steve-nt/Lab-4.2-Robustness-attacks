@@ -303,7 +303,7 @@ start as soon as the setup notebook is on `main`.
 | ID | Task | What it is and why | Needs | Done |
 |---|---|---|---|---|
 | E1 | Ensemble | Gradient boosting + forest + logreg averaged; compare with the forest on clean, noise, missing, attack | T3 (B1, B2, C2 for the final table) | ☑ |
-| E2 | Drop one feature vs. a whole group | Single-feature removal looks free, group removal does not: measures redundancy | T3 | ☐ |
+| E2 | Drop one feature vs. a whole group | Single-feature removal looks free, group removal does not: measures redundancy | T3 | ☑ |
 
 ### Part F: are the explanations honest?
 
@@ -973,15 +973,15 @@ features have twins (PDF section 3.6). Doing it both ways measures the redundanc
 a chain (A~B and B~C → {A, B, C}). Build them with `scipy.sparse.csgraph.connected_components` on the
 matrix `CORR > 0.95` (with the diagonal set to False), and keep only groups with 2 or more features.
 
-- [ ] One fixed stratified subsample of `X_train` (e.g. 30,000 rows, seed 42) and, if needed, one fixed
+- [x] One fixed stratified subsample of `X_train` (e.g. 30,000 rows, seed 42) and, if needed, one fixed
       subsample of `X_test`. **Use the same subsamples in every loop** (graded).
-- [ ] Reference: 100-tree forest on all 68 features → macro-F1.
-- [ ] For each of the 68 features: drop it, retrain a 100-tree forest (`random_state=42`), measure
+- [x] Reference: 100-tree forest on all 68 features → macro-F1.
+- [x] For each of the 68 features: drop it, retrain a 100-tree forest (`random_state=42`), measure
       macro-F1. Print the five with the biggest drop. Save `results/tables/E2_single_removal.csv`.
-- [ ] Find the correlation groups; for each group, drop the whole group, retrain, measure. Save
+- [x] Find the correlation groups; for each group, drop the whole group, retrain, measure. Save
       `results/tables/E2_group_removal.csv` with the group's members.
-- [ ] Figure: single-feature drops vs. group drops (`results/figures/E2_single_vs_group.png`).
-- [ ] Markdown: the single test said a feature was expendable; the group test said its information was
+- [x] Figure: single-feature drops vs. group drops (`results/figures/E2_single_vs_group.png`).
+- [x] Markdown: the single test said a feature was expendable; the group test said its information was
       essential. Which answer do you give an engineer deciding what to stop collecting?
 
 **Pitfalls:** Keep the loop to about five minutes; reduce the subsample if needed, but keep it the same
@@ -991,6 +991,22 @@ in both loops. Use `n_jobs=-1`.
 
 **Done when:** both tables exist and use the same subsample.
 **Goes into the report:** Results (E2 table/figure); Discussion (redundancy).
+
+**Result (2026-10-05, `parts/30_explanations.ipynb`):** `results/tables/E2_single_removal.csv`,
+`E2_group_removal.csv`, `E2_block_removal.csv`, `results/figures/E2_single_vs_group.png`. Fixed
+stratified 30,000-row training sample; full test set; 100-tree forests (`max_depth=20`). The reference
+was trained with 6 seeds to get a **noise band of 0.0008** macro-F1.
+
+- Single removals look free: only 2 of 68 exceed the noise band (largest: `Fwd IAT Min` 0.0013).
+- **Group removals also look free, against the lab's expectation:** all 14 groups cost ≤ 0.0006.
+- Added whole blocks to find out how much must go before it hurts: all forward features 0.0025, all
+  size features 0.0020, all backward 0.0015, all timing 0.0008. The feature set is redundant far beyond
+  the 0.95 twins, and a retrained forest switches to other features.
+- Not a contradiction of F1 and X1: removing information at *prediction time* in a trained model is
+  catastrophic (X1: recall 0.001; F1: −0.47). Retraining without it is cheap.
+- Answer for the engineer: decide per group, only with retraining, and count the security cost.
+  Dropping the backward features costs only 0.0015 macro-F1, but they are the Fixed evidence the
+  attacker cannot forge (D1).
 
 ---
 

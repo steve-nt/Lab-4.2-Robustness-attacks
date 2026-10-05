@@ -1,0 +1,15 @@
+group,size,members,macro_f1,macro_f1_drop,recall_drop,largest_single_drop,sum_of_single_drops
+Flow IAT Max (+4),5,Flow IAT Max; Fwd IAT Max; Idle Mean; Idle Max; Idle Min,0.99352,0.00060,0.00171,0.00031,0.00082
+Bwd Packet Length Max (+3),4,Bwd Packet Length Max; Bwd Packet Length Mean; Bwd Packet Length Std; Avg Bwd Segment Size,0.99370,0.00042,0.00141,0.00040,0.00132
+Total Fwd Packets (+6),7,Total Fwd Packets; Total Backward Packets; Total Length of Bwd Packets; Subflow Fwd Packets; Subflow Bwd Packets; Subflow Bwd Bytes; act_data_pkt_fwd,0.99372,0.00040,0.00134,0.00033,0.00104
+Fwd Packet Length Max (+1),2,Fwd Packet Length Max; Fwd Packet Length Std,0.99372,0.00040,0.00126,0.00038,0.00051
+Packet Length Mean (+1),2,Packet Length Mean; Average Packet Size,0.99385,0.00027,0.00119,0.00033,0.00062
+Fwd Packet Length Mean (+1),2,Fwd Packet Length Mean; Avg Fwd Segment Size,0.99388,0.00024,0.00067,0.00038,0.00073
+RST Flag Count (+1),2,RST Flag Count; ECE Flag Count,0.99394,0.00018,0.00097,0.00018,0.00018
+Fwd Header Length (+2),3,Fwd Header Length; Bwd Header Length; min_seg_size_forward,0.99394,0.00018,0.00067,0.00068,0.00144
+Total Length of Fwd Packets (+1),2,Total Length of Fwd Packets; Subflow Fwd Bytes,0.99396,0.00016,0.00059,0.00042,0.00066
+Fwd PSH Flags (+1),2,Fwd PSH Flags; SYN Flag Count,0.99401,0.00011,0.00052,0.00026,0.00042
+Max Packet Length (+1),2,Max Packet Length; Packet Length Std,0.99410,0.00002,0.00052,0.00029,0.00033
+Fwd URG Flags (+1),2,Fwd URG Flags; CWE Flag Count,0.99412,0.00000,0.00037,0.00024,0.00046
+Flow Packets/s (+1),2,Flow Packets/s; Fwd Packets/s,0.99421,-0.00009,0.00015,0.00040,0.00046
+Flow Duration (+1),2,Flow Duration; Fwd IAT Total,0.99443,-0.00031,-0.00067,0.00018,0.00013
