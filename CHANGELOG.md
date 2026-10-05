@@ -473,3 +473,22 @@ Word XML).
   (replacing a table that repeated it), "Figure 2, left" was corrected, and "three times" became
   "almost four times" to match the corrected ROC-AUC spread (0.008).
 - The user committed all of this as 8fd9b3b ("Almost finished"); this entry comes after that commit.
+
+## 2026-10-05 16:26 EEST: Submission checklist
+
+**What**
+- `File-Submission-List.md`: created. It lists:
+  - the report files to upload (PDF; Word and Markdown optional)
+  - the code to zip, and why each part is needed
+  - what not to submit, and a checklist before zipping (including the who-did-what placeholder)
+  - tested commands to make the zip, with an optional step that adds the dataset
+
+**Why**
+The user asked for a list of what to submit. The dataset gets its own note because `clean.csv` is
+not in git, so a `git archive` zip would not contain it. The "Who did what" line in the report is
+still a placeholder: the user stopped my edit that would have filled it in, so it was left unchanged.
+
+**Verified**
+Measured: `git archive` zip 3.9 MB (74 committed files); `clean.csv` zipped 50 MB; zip with the
+dataset 53.6 MB. All three zip commands were run in a temporary folder and worked. The only warning
+was that the checklist itself is not committed yet.
