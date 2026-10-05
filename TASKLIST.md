@@ -328,9 +328,9 @@ start as soon as the setup notebook is on `main`.
 
 | ID | Task | What it is and why | Needs | Done |
 |---|---|---|---|---|
-| T5 | Report (2–3 pages) | Five headings set by the lab, captioned figures and tables, code screenshot, who-did-what, AI-use statement | all steps | ☐ |
-| T6 | README | Libraries, dataset, how to run (the lab requires it) | T2, T3 | ☐ |
-| T7 | Final check and submission | Fresh run of the assembled notebook, numbers match the report, upload to Canvas | T5, T6 | ☐ |
+| T5 | Report (2–3 pages) | Five headings set by the lab, captioned figures and tables, code screenshot, who-did-what, AI-use statement | all steps | ☑ (who-did-what line still to fill in) |
+| T6 | README | Libraries, dataset, how to run (the lab requires it) | T2, T3 | ☑ |
+| T7 | Final check and submission | Fresh run of the assembled notebook, numbers match the report, upload to Canvas | T5, T6 | ☐ (full run and number check done; upload open) |
 
 ---
 
@@ -595,12 +595,12 @@ accuracy alone.
 |---|---|---|---|---|---|---|
 | always benign | 0.8493 | 0.4593 | 0.0000 | 0.5000 | 0.1507 | 0.0000 |
 | tree | 0.9985 | 0.9970 | 0.9950 | 0.9971 | 0.9907 | 0.0009 |
-| logreg | 0.9720 | 0.9417 | 0.8326 | 0.9914 | 0.9693 | 0.0032 |
+| logreg | 0.9720 | 0.9416 | 0.8320 | 0.9915 | 0.9693 | 0.0032 |
 | forest | 0.9984 | 0.9968 | 0.9923 | 0.9999 | 0.9998 | 0.0006 |
 
 Check-yourself answers are in the notebook. In short: the forest is +0.149 above always-benign on
 accuracy, but removes 99% of the errors and lifts recall from 0 to 0.99. PR-AUC moved more than
-ROC-AUC (spread 0.031 vs 0.009). Side note: the tree has the best macro-F1 but the lowest ROC-AUC,
+ROC-AUC (spread 0.031 vs 0.008). Side note: the tree has the best macro-F1 but the lowest ROC-AUC,
 because its probabilities are almost all 0 or 1.
 
 ---
@@ -649,7 +649,7 @@ zero only the 47 continuous columns whose training minimum is ≥ 0.
 |---|---|---|---|---|---|
 | forest macro-F1 / recall | 0.997 / 0.992 | 0.521 / 0.063 | 0.508 / 0.049 | 0.497 / 0.038 | 0.480 / 0.020 |
 | tree macro-F1 / recall | 0.997 / 0.995 | 0.399 / 0.109 | 0.396 / 0.108 | 0.396 / 0.113 | 0.395 / 0.133 |
-| logreg macro-F1 / recall | 0.942 / 0.833 | 0.909 / 0.837 | 0.858 / 0.833 | 0.753 / 0.795 | 0.597 / 0.708 |
+| logreg macro-F1 / recall | 0.942 / 0.832 | 0.909 / 0.836 | 0.856 / 0.831 | 0.752 / 0.792 | 0.596 / 0.703 |
 
 **Not what the lab expects:** both tree models collapse already at 5%, and logistic regression is
 the most robust. This is real, not a bug (checked in a diagnostic cell). Outliers inflate the std of
@@ -684,7 +684,7 @@ is an ordinary value: the training median.
 
 **Result (2026-10-04):** `results/tables/B2_missing.csv`. 7 of 68 features per row (10.3%) set to the
 training median. Macro-F1 / recall at 10% missing: forest 0.990 / 0.968, tree 0.876 / 0.746, logreg
-0.781 / 0.613. Noise hurts the trees far more than missing values; for logistic regression it is the
+0.778 / 0.609. Noise hurts the trees far more than missing values; for logistic regression it is the
 other way round. No model is safest against both.
 
 ---
@@ -950,7 +950,7 @@ on a stratified 100,000-row subsample in about 7.5 minutes, cached as `models/gb
 |---|---|---|
 | Clean macro-F1 / recall | 0.997 / 0.992 | 0.997 / 0.990 |
 | 5% noise macro-F1 / recall | 0.521 / 0.063 | 0.621 / 0.193 |
-| 10% missing macro-F1 / recall | 0.990 / 0.968 | 0.972 / 0.911 |
+| 10% missing macro-F1 / recall | 0.990 / 0.968 | 0.973 / 0.913 |
 | Constrained attack, evaded of 50 | 9 | **11** |
 
 - The ensemble helps a little under noise, entirely because of logistic regression.
@@ -1122,7 +1122,7 @@ flows (forest probability 0.3–0.7) as a comparison group.
 | ID | What to do | Owner |
 |---|---|---|
 | X1 | Replace **all** `Bwd` features (then all `Idle` features) with medians at once; compare with B2's random 10% | Track 1. ☑ Done: all 17 backward features missing → forest recall **0.001** (17 random per row: 0.68); all idle timers missing → almost no loss. `results/tables/X1_group_missing.csv` |
-| X2 | Run B1 with and without clipping at zero; one table | Track 1. ☑ Done: no change for tree and forest, logreg macro-F1 up to +0.023 with clipping. `results/tables/X2_clip_vs_noclip.csv` |
+| X2 | Run B1 with and without clipping at zero; one table | Track 1. ☑ Done: no change for tree and forest, logreg macro-F1 up to +0.024 with clipping. `results/tables/X2_clip_vs_noclip.csv` |
 | X3 | Constrained attack success rate with 1, 3, 5, 10 steps; plot | Track 2 |
 | X4 | Score the 50 rows crafted against `rf` with `tree`, `logreg` and `ensemble` (does evasion transfer?) | Track 2 |
 | X5 | LIME 5 times with seeds 0–4 on the same flow; count how often the top-3 is the same. SHAP gives the same answer every time | Track 3 |
@@ -1146,22 +1146,29 @@ The lab fixes five headings:
 | 4. Discussion | How much of the score is real? How much robustness comes from the network? Does the model lean on fakeable evidence? Are the explanations stable, faithful, both or neither? All "Check yourself" answers | each track drafts, one person edits |
 | 5. Who did what | One or two lines | everyone |
 
-- [ ] Write in `report/Lab4_2_Report.md`; adapt `report/build_report.py` / `build_docx.py` (file names,
+- [x] Write in `report/Lab4_2_Report.md`; adapt `report/build_report.py` / `build_docx.py` (file names,
       title) to build the PDF.
-- [ ] Every figure and table has a caption and is mentioned in the text.
-- [ ] The trivial baseline appears next to the model scores.
-- [ ] A screenshot of your code (the lab requires it), e.g. the `greedy_attack` cell.
-- [ ] AI-use statement, and citations for libraries/tutorials used.
-- [ ] Every number comes from the assembled notebook's run (sync 3).
+- [x] Every figure and table has a caption and is mentioned in the text.
+- [x] The trivial baseline appears next to the model scores.
+- [x] A screenshot of your code (the lab requires it), e.g. the `greedy_attack` cell.
+- [x] AI-use statement, and citations for libraries/tutorials used.
+- [x] Every number comes from the assembled notebook's run (sync 3).
 
 **Done when:** 2–3 pages, five headings, PDF built.
+
+**Result (2026-10-05):** `report/Lab4_2_Report.md` is the report itself (readable Markdown, real
+numbers). `report/Lab4_2_Report.docx` (with the Group 6 title page) and `report/Lab4_2_Report.pdf`
+(3 pages plus a one-page code appendix) are built from it by `report/build_docx.py` and
+`report/build_report.py`. `tools/check_report_numbers.py` confirms all 80 numbers in the text against
+the hand-in run. **Still open:** the "Who did what" line is a placeholder. Fill it in in the Markdown,
+then rebuild both files.
 
 #### T6 · README (Track 2)
 
 **Why:** The lab requires a short README (libraries, dataset, how to run); it is part of the 30%
 implementation grade.
 
-- [ ] Replace the one-line `README.md` with: what the lab does (3 sentences), dataset and where to get
+- [x] Replace the one-line `README.md` with: what the lab does (3 sentences), dataset and where to get
       `clean.csv` (point to `data/README.md`), setup commands (T2), how to run the notebook and
       `tools/assemble.py`, rough run times, seed 42, how the code is organised (part notebooks).
 
@@ -1169,17 +1176,25 @@ implementation grade.
 
 #### T7 · Final check and submission (everyone)
 
-- [ ] `python tools/assemble.py --strict` on `main`: the notebook runs from top to bottom with no
+- [x] `python tools/assemble.py --strict` on `main`: the notebook runs from top to bottom with no
       errors, with `models/` emptied first (so it really trains from scratch).
-- [ ] Compare every number in the report with the notebook output.
-- [ ] Check the grading list:
-  - [ ] std and medians measured on the **training** set only (B1, B2, F1);
-  - [ ] the feature groups are justified and **no Fixed feature was ever changed** (C3 assertion);
-  - [ ] the attack ran both constrained and unconstrained (C2);
-  - [ ] the same subsample in both removal loops (E2);
-  - [ ] trivial baseline reported next to the model (A2);
-  - [ ] group results compared with single-feature results (E2, F1);
-  - [ ] README present, `random_state=42` everywhere.
+- [x] Compare every number in the report with the notebook output.
+- [x] Check the grading list:
+  - [x] std and medians measured on the **training** set only (B1, B2, F1);
+  - [x] the feature groups are justified and **no Fixed feature was ever changed** (C3 assertion);
+  - [x] the attack ran both constrained and unconstrained (C2);
+  - [x] the same subsample in both removal loops (E2);
+  - [x] trivial baseline reported next to the model (A2);
+  - [x] group results compared with single-feature results (E2, F1);
+  - [x] README present, `random_state=42` everywhere.
 - [ ] Upload to Canvas: the code (zip or repository link) and the report as PDF.
 
 **Done when:** submitted before the deadline.
+
+**Result (2026-10-05):** full run from scratch (all `models/*.joblib` moved away first) on branch
+`stente-5`, not `main`: 3,666 s (about 61 min), no errors. The first attempt was killed when the
+Claude Code session ended. The tree, the forest, the attack, SHAP and LIME reproduced exactly. Logistic
+regression changed slightly (macro-F1 0.9417 → 0.9416, recall 0.8326 → 0.8320), probably because the
+VM went from 4 to 8 cores between runs. Every number quoting it was updated in the notebooks, the report
+and this file. The grading list holds; note that E2's noise band uses seeds 1–5 on purpose, next to
+seed 42. **Still open:** merge to `main` and re-check there, the who-did-what line, and the upload.

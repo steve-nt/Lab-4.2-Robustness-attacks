@@ -1,8 +1,9 @@
 """Build the Word version of the report from the Markdown one.
 
 Both copies of the report must say the same thing, so the .docx is generated from
-report/Lab4_1_Report.md, the same source as the PDF (report/build_report.py). The numbers, tables and
-code images are filled in exactly as for the PDF. report/title_page_template.docx supplies the title
+report/Lab4_2_Report.md, the same file as the PDF (report/build_report.py). Figures are the Markdown
+images, each followed by its "*Figure ...*" caption line; the code screenshot is rendered from the
+hand-in notebook exactly as for the PDF. report/title_page_template.docx supplies the title
 page (course, group, authors, university logo); its assignment title is set to this lab, and the report
 is appended after a page break. The Markdown title and author line are skipped because the title page
 already has them.
@@ -21,11 +22,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_report                              # noqa: E402  same tokens, tables and code images
 
 ROOT = Path(__file__).resolve().parent.parent
-MARKDOWN = ROOT / "report" / "Lab4_1_Report.md"
-DOCX = ROOT / "report" / "Lab4_1_Report.docx"
+MARKDOWN = ROOT / "report" / "Lab4_2_Report.md"
+DOCX = ROOT / "report" / "Lab4_2_Report.docx"
 TEMPLATE = ROOT / "report" / "title_page_template.docx"
 TEMPLATE_TITLE = "Lab3: Explainability and BRBES-2"
-TITLE = "Lab 4.1: Explaining Phishing Detectors"
+TITLE = "Lab 4.2: Robustness, Attacks and Honest Explanations"
 
 PAGE_WIDTH_DXA = 12240 - 540 - 450        # page width minus the template's margins
 EMU_PER_INCH = 914400
@@ -152,12 +153,9 @@ def prepare(markdown):
 
 
 def figure_paths(line):
-    """The image files of a [[figures ...]] or [[code ...]] line, and its caption."""
-    if m := re.fullmatch(r"\[\[figures (.+?) \| (.+)\]\]", line):
-        return [ROOT / p.strip() for p in m.group(1).split(";")], m.group(2)
-    if m := re.fullmatch(r"\[\[code (.+?) \| (.+)\]\]", line):
-        return build_report.code_images(m.group(1)), m.group(2)
-    return None, None
+    """The image files of a line that holds only Markdown images, else None."""
+    paths = build_report.image_line(line)
+    return [ROOT / p for p in paths] if paths is not None else None
 
 
 def convert(markdown, images):
@@ -165,19 +163,21 @@ def convert(markdown, images):
     drawing_id = 100
     while index < len(lines):
         line = lines[index].rstrip()
-        paths, text = figure_paths(line.strip())
+        paths = figure_paths(line)
         if not line:
             index += 1
-        elif line.strip() == "[[pagebreak]]":
+        elif line.strip() == "<!-- pagebreak -->":
             body.append('<w:p><w:r><w:br w:type="page"/></w:r></w:p>')
             index += 1
         elif paths:                                                    # figure row + caption
-            code = line.startswith("[[code")
+            code = any("code_" in p.name for p in paths)
             body.append(image_row([(p, images[p]) for p in paths], drawing_id,
                                   max_height_inches=8.5 if code else 3.3))
-            body.append(caption(text))
             drawing_id += len(paths)
             index += 1
+            if index < len(lines) and lines[index].strip().startswith("*Figure"):
+                body.append(caption(lines[index].strip().strip("*")))
+                index += 1
         elif line.startswith("|"):                                    # table
             rows = []
             while index < len(lines) and lines[index].startswith("|"):
@@ -200,7 +200,7 @@ def convert(markdown, images):
             text = [line]
             index += 1
             while (index < len(lines) and lines[index].strip()
-                   and not re.match(r"^(\||#|- |\[\[)", lines[index])):
+                   and not re.match(r"^(\||#|- |!\[|<!--)", lines[index])):
                 text.append(lines[index].strip())
                 index += 1
             joined = " ".join(text)
@@ -217,10 +217,10 @@ def main():
         sys.exit(f"ERROR: {TEMPLATE.relative_to(ROOT)} is missing (the title page template).")
 
     markdown = prepare(MARKDOWN.read_text(encoding="utf-8"))
+    build_report.make_code_images()
     figures = []
     for line in markdown.splitlines():
-        paths, _ = figure_paths(line.strip())
-        figures += [Path(p) for p in paths or []]
+        figures += [Path(p) for p in figure_paths(line) or []]
 
     with zipfile.ZipFile(TEMPLATE) as template:
         parts = {name: template.read(name) for name in template.namelist()}

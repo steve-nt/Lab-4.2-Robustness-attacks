@@ -2,49 +2,49 @@ test_position,attack_type,p_before,p_after,evaded,n_features_changed,changed
 6,DDoS,0.9995,0.9215,False,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
 7,DoS Hulk,0.9999,0.9487,False,4,Subflow Fwd Packets;Total Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets
 11,DDoS,0.9996,0.9338,False,5,Subflow Fwd Packets;Total Fwd Packets;Flow IAT Min;Fwd IAT Min;Total Length of Fwd Packets
-14,DoS GoldenEye,0.8379,0.4242,True,3,Flow IAT Max;Subflow Fwd Bytes;Active Min
-19,DoS Hulk,0.9999,0.6377,False,4,Flow IAT Max;Flow IAT Max;Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Packet Length Std
-31,SSH-Patator,0.6993,0.4905,True,2,Active Min;Flow IAT Max
-40,DoS Hulk,0.9976,0.6100,False,3,Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Max
-43,DoS Hulk,0.9945,0.5964,False,4,Flow IAT Max;Subflow Fwd Bytes;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Std
+14,DoS GoldenEye,0.8420,0.4242,True,3,Flow IAT Max;Subflow Fwd Bytes;Active Min
+19,DoS Hulk,0.9999,0.6359,False,4,Flow IAT Max;Flow IAT Max;Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Header Length
+31,SSH-Patator,0.7007,0.4905,True,2,Active Min;Flow IAT Max
+40,DoS Hulk,0.9976,0.6096,False,3,Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Std;Fwd Packet Length Max
+43,DoS Hulk,0.9929,0.6077,False,5,Flow IAT Max;Subflow Fwd Bytes;Total Length of Fwd Packets;Fwd Header Length;Fwd Packet Length Std
 52,DoS Hulk,0.9999,0.9443,False,4,Subflow Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets;Fwd Header Length
 57,DDoS,0.9996,0.9215,False,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
-63,DoS Hulk,0.9977,0.6150,False,3,Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Max
-73,DDoS,0.7500,0.4430,True,2,Fwd Packet Length Std;Fwd Packet Length Max
-79,DoS Hulk,0.8067,0.4974,True,4,Fwd IAT Total;Fwd IAT Mean;Fwd IAT Min;Active Min
-95,DoS GoldenEye,0.8797,0.4188,True,3,Flow IAT Max;Subflow Fwd Bytes;Active Min
-97,DDoS,0.9945,0.6052,False,5,Flow IAT Max;Total Length of Fwd Packets;Subflow Fwd Bytes;Active Max;act_data_pkt_fwd
-103,DDoS,0.7799,0.3875,True,3,Fwd Packet Length Std;Flow IAT Min;Fwd Packet Length Max
-109,DoS Hulk,0.9974,0.6116,False,3,Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Std;Fwd Packet Length Max
+63,DoS Hulk,0.9983,0.6150,False,3,Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Max
+73,DDoS,0.7492,0.4429,True,2,Fwd Packet Length Std;Fwd Packet Length Max
+79,DoS Hulk,0.8064,0.4969,True,4,Fwd IAT Total;Fwd IAT Mean;Fwd IAT Min;Active Min
+95,DoS GoldenEye,0.8855,0.4187,True,3,Flow IAT Max;Subflow Fwd Bytes;Active Min
+97,DDoS,0.9929,0.6066,False,5,Flow IAT Max;Total Length of Fwd Packets;Subflow Fwd Bytes;Fwd Header Length;Active Max
+103,DDoS,0.7783,0.3887,True,3,Fwd Packet Length Std;Flow IAT Min;Fwd Packet Length Max
+109,DoS Hulk,0.9977,0.6115,False,3,Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Std;Fwd Packet Length Max
 128,DoS Hulk,0.9986,0.6087,False,4,Flow IAT Max;Fwd Packet Length Std;Subflow Fwd Packets;Fwd Packet Length Std;Total Fwd Packets
 132,DDoS,0.9995,0.9181,False,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
-149,DoS Hulk,0.9998,0.6277,False,4,Flow IAT Max;Flow IAT Max;Subflow Fwd Packets;Fwd Packet Length Std;Fwd Packet Length Max
+149,DoS Hulk,0.9998,0.6198,False,3,Flow IAT Max;Flow IAT Max;Fwd Packet Length Max;Fwd Packet Length Std;Fwd Packet Length Std
 150,DoS Hulk,0.9999,0.9521,False,4,Subflow Fwd Packets;Total Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets
 151,DDoS,0.9995,0.9037,False,5,Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Header Length;Total Fwd Packets;Subflow Fwd Bytes
 164,DDoS,0.9995,0.9070,False,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
-177,DDoS,0.8904,0.4766,True,3,Fwd Packet Length Std;Flow IAT Min;Active Min
-178,DoS Hulk,0.9999,0.6399,False,4,Flow IAT Max;Flow IAT Max;Total Length of Fwd Packets;Subflow Fwd Packets;Fwd Packet Length Std
+177,DDoS,0.8908,0.4834,True,3,Fwd Packet Length Std;Flow IAT Min;Active Min
+178,DoS Hulk,0.9999,0.6394,False,4,Flow IAT Max;Flow IAT Max;Total Length of Fwd Packets;Subflow Fwd Packets;Fwd Header Length
 185,DDoS,0.9996,0.9116,False,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
 188,DDoS,0.9995,0.9204,False,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
 196,DDoS,0.9996,0.9423,False,5,Subflow Fwd Packets;Total Fwd Packets;Flow IAT Min;Fwd IAT Min;Fwd Header Length
-198,DoS Hulk,0.9996,0.6167,False,3,Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Max
-204,DoS Hulk,0.9998,0.6298,False,3,Flow IAT Max;Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Std
+198,DoS Hulk,0.9996,0.6159,False,3,Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Max
+204,DoS Hulk,0.9998,0.6338,False,4,Flow IAT Max;Flow IAT Max;Subflow Fwd Packets;Fwd Packet Length Std;Fwd Packet Length Max
 212,DoS Hulk,0.9999,0.9443,False,4,Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Fwd Header Length
 221,DoS Hulk,0.9999,0.9443,False,4,Fwd Packet Length Max;Fwd Packet Length Max;Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Header Length
-226,DDoS,0.7854,0.4130,True,3,Fwd Packet Length Std;Flow IAT Min;Fwd Packet Length Max
-236,DoS Hulk,0.9998,0.6420,False,4,Flow IAT Max;Flow IAT Max;Subflow Fwd Packets;Total Length of Fwd Packets;Fwd Header Length
-243,DoS Hulk,0.9996,0.6162,False,3,Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Max
+226,DDoS,0.7836,0.4142,True,3,Fwd Packet Length Std;Flow IAT Min;Fwd Packet Length Max
+236,DoS Hulk,0.9999,0.6250,False,3,Flow IAT Max;Flow IAT Max;Fwd Packet Length Max;Fwd Packet Length Std;Fwd Packet Length Max
+243,DoS Hulk,0.9996,0.6152,False,3,Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Max
 250,DoS Hulk,0.9999,0.9521,False,4,Subflow Fwd Packets;Total Fwd Packets;Fwd Packet Length Max;Fwd Packet Length Max;Total Length of Fwd Packets
 260,DDoS,0.9995,0.9181,False,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
-276,DoS Hulk,0.9986,0.6122,False,3,Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Max
-283,DDoS,0.7826,0.3839,True,3,Fwd Packet Length Std;Flow IAT Min;Fwd Packet Length Max
-295,DDoS,0.8925,0.4918,True,3,Fwd Packet Length Std;Flow IAT Min;Active Min
+276,DoS Hulk,0.9983,0.6117,False,3,Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Std;Fwd Packet Length Max
+283,DDoS,0.7806,0.3849,True,3,Fwd Packet Length Std;Flow IAT Min;Fwd Packet Length Max
+295,DDoS,0.8928,0.4988,True,3,Fwd Packet Length Std;Flow IAT Min;Active Min
 299,DDoS,0.9996,0.9327,False,5,Subflow Fwd Packets;Total Fwd Packets;Flow IAT Min;Fwd IAT Min;Fwd Header Length
 306,DoS Hulk,0.9999,0.9465,False,4,Fwd Packet Length Max;Total Length of Fwd Packets;Subflow Fwd Packets;Fwd Packet Length Max;Active Std
 313,DDoS,0.9999,0.9532,False,5,Subflow Fwd Packets;Total Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Fwd Packet Length Min
-317,DDoS,0.8549,0.4790,True,3,Fwd Packet Length Std;Flow IAT Min;Fwd Packet Length Max
-327,DDoS,0.9999,0.6410,False,3,Flow IAT Max;Flow IAT Max;Total Length of Fwd Packets;Subflow Fwd Packets;Flow IAT Max
-331,DoS Hulk,0.9996,0.6207,False,4,Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Std;Fwd Packet Length Max;Subflow Fwd Packets
+317,DDoS,0.8543,0.4820,True,3,Fwd Packet Length Std;Flow IAT Min;Fwd Packet Length Max
+327,DDoS,0.9999,0.6406,False,4,Flow IAT Max;Flow IAT Max;Subflow Fwd Packets;Total Length of Fwd Packets;Active Max
+331,DoS Hulk,0.9995,0.6183,False,3,Flow IAT Max;Fwd Packet Length Std;Fwd Packet Length Std;Fwd Packet Length Max;Fwd Packet Length Max
 337,DDoS,0.9994,0.9200,False,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes
 341,DDoS,0.9995,0.9193,False,5,Subflow Fwd Packets;Fwd Header Length;Total Length of Fwd Packets;Total Fwd Packets;Subflow Fwd Bytes
 344,DDoS,0.9995,0.9159,False,5,Subflow Fwd Packets;Fwd Header Length;Total Fwd Packets;Total Length of Fwd Packets;Subflow Fwd Bytes

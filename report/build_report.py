@@ -1,20 +1,18 @@
-"""Build the lab report PDF from report/Lab4_1_Report.md.
+"""Build the lab report PDF from report/Lab4_2_Report.md.
 
-The Markdown source never contains a result number typed by hand. Numbers and tables come from the
-CSV files the notebook writes to results/tables/, so the report always matches the last notebook run:
+The Markdown file is the report itself, readable in any Markdown viewer: ordinary headings, paragraphs,
+lists, pipe tables, **bold**, *italic* and `code`, plus standard images. A figure is a line holding one
+or more images, followed by its caption on the next line, which starts with "*Figure":
 
-    {{A10_test_scores:forest (100%):macro_F1}}      one value: file, row (first column or #n), column
-    {{D3_rules:#1:support:.0f}}                     optional Python format spec
-    [[table D4_brb_scores | model, macro_F1, FAR | Model, Macro-F1, FAR | rows=4]]
-    [[figures results/figures/a.png ; results/figures/b.png | Figure 1. Caption]]
-    [[code A8 1-27 | Figure 2. Caption]]            code cell(s) of a lab step, from the notebook;
-                                                    an optional line range shows an excerpt
-    [[pagebreak]]
+    ![SHAP ranking](../results/figures/D1_shap_bar.png) ![Deletion test](../results/figures/F1_deletion.png)
+    *Figure 2. Left: ... Right: ...*
 
-Everything else is ordinary Markdown (headings, paragraphs, lists, pipe tables, **bold**, *italic*,
-`code`). The fonts are bundled in report/fonts/, so the PDF looks the same on every machine.
+Image paths are relative to report/. A line "<!-- pagebreak -->" starts a new page (invisible in a
+Markdown viewer). The code "screenshot" (report/figures/code_greedy_attack.png) is rendered from the
+hand-in notebook by make_code_images(), so it always shows the code that produced the numbers.
+The fonts are bundled in report/fonts/, so the PDF looks the same on every machine.
 
-Run from the repository root (after the notebook has been run):
+Run from the repository root (after the hand-in notebook has been run):
     .venv/bin/python report/build_report.py
 """
 import re
@@ -31,12 +29,15 @@ from pygments.lexers import PythonLexer
 from pygments.styles import get_style_by_name
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE = ROOT / "report" / "Lab4_1_Report.md"
-OUTPUT = ROOT / "report" / "Lab4_1_Report.pdf"
+SOURCE = ROOT / "report" / "Lab4_2_Report.md"
+OUTPUT = ROOT / "report" / "Lab4_2_Report.pdf"
 TABLES = ROOT / "results" / "tables"
-NOTEBOOK = ROOT / "lab4_1_explaining_phishing_detectors.ipynb"
+NOTEBOOK = ROOT / "lab4_2_robustness_attacks.ipynb"
 FONTS = ROOT / "report" / "fonts"
 CODE_IMAGES = ROOT / "report" / "figures"
+REPORT_DIR = ROOT / "report"
+# Code screenshots used by the report: image file -> (lab step, text that identifies the cell).
+CODE_FIGURES = {"code_greedy_attack.png": ("C2", "def greedy_attack")}
 
 BODY_PT, TABLE_PT, CAPTION_PT = 9.5, 8, 8.5
 MARGIN = 15                                   # mm
@@ -120,11 +121,13 @@ def expand(text):
 # ---------------------------------------------------------------------------
 # 2. Code "screenshots": code cells of the hand-in notebook rendered as images
 # ---------------------------------------------------------------------------
-def code_image(step, path, lines=None, font_px=26, pad=24, max_chars=100):
-    """Render the code of one lab step (or lines first-last of it) as a PNG, like a screenshot."""
+def code_image(step, path, lines=None, font_px=26, pad=24, max_chars=100, contains=None):
+    """Render the code of one lab step (or lines first-last of it) as a PNG, like a screenshot.
+    With `contains`, only the code cell of that step containing this text is used."""
     nb = nbformat.read(NOTEBOOK, as_version=4)
     cells = [c.source for c in nb.cells
-             if c.cell_type == "code" and c.source.startswith(f"# STEP {step}\n")]
+             if c.cell_type == "code" and c.source.startswith(f"# STEP {step}\n")
+             and (contains is None or contains in c.source)]
     if not cells:
         sys.exit(f"ERROR: no code cell for step {step} in {NOTEBOOK.name}")
     source = "\n\n".join(cells)
@@ -154,6 +157,12 @@ def code_image(step, path, lines=None, font_px=26, pad=24, max_chars=100):
                 x += char_w * len(piece)
     image.save(path)
     return path
+
+
+def make_code_images():
+    """Render every code screenshot the report uses (CODE_FIGURES) from the hand-in notebook."""
+    CODE_IMAGES.mkdir(exist_ok=True)
+    return [code_image(step, CODE_IMAGES / name, contains=text) for name, (step, text) in CODE_FIGURES.items()]
 
 
 def code_images(spec):
@@ -262,9 +271,20 @@ def render_figures(pdf, paths, caption, height_limit=50):
     pdf.ln(2.5)
 
 
+IMAGE = re.compile(r"!\[[^\]]*\]\(([^)]+)\)")
+
+
+def image_line(line):
+    """Image paths (relative to the repository root) if the line holds only images, else None."""
+    stripped = line.strip()
+    if not stripped.startswith("![") or IMAGE.sub("", stripped).strip():
+        return None
+    return [str((REPORT_DIR / p).resolve().relative_to(ROOT)) for p in IMAGE.findall(stripped)]
+
+
 def main():
     text = expand(SOURCE.read_text(encoding="utf-8"))
-    CODE_IMAGES.mkdir(exist_ok=True)
+    make_code_images()
 
     pdf = Report(format="A4")
     pdf.set_margins(MARGIN, MARGIN, MARGIN)
@@ -275,7 +295,7 @@ def main():
     pdf.add_font("Sans", "BI", str(FONTS / "LiberationSans-BoldItalic.ttf"))
     for style in ("", "B", "I", "BI"):                 # code inside bold/italic text: same mono font
         pdf.add_font("Mono", style, str(FONTS / "DejaVuSansMono.ttf"))
-    pdf.set_title("Lab 4.1: Explaining Phishing Detectors")
+    pdf.set_title("Lab 4.2: Robustness, Attacks and Honest Explanations")
     pdf.add_page()
 
     pending, table = [], []
@@ -286,24 +306,29 @@ def main():
             render_markdown(pdf, "\n".join(pending))
             pending.clear()
 
-    for line in text.splitlines() + [""]:
+    lines = text.splitlines() + [""]
+    index = 0
+    while index < len(lines):
+        line = lines[index]
+        index += 1
         if table and not line.lstrip().startswith("|"):
             render_table(pdf, table)
             table.clear()
         if line.lstrip().startswith("|"):
             flush()
             table.append(line)
-        elif line.strip() == "[[pagebreak]]":
+        elif line.strip() == "<!-- pagebreak -->":
             flush()
             page_breaks.append(pdf.page_no())
             pdf.add_page()
-        elif m := re.fullmatch(r"\[\[figures (.+?) \| (.+)\]\]", line.strip()):
+        elif (paths := image_line(line)) is not None:
             flush()
-            render_figures(pdf, m.group(1).split(";"), m.group(2))
-        elif m := re.fullmatch(r"\[\[code (.+?) \| (.+)\]\]", line.strip()):
-            flush()
-            images = [str(p.relative_to(ROOT)) for p in code_images(m.group(1))]
-            render_figures(pdf, images, m.group(2), height_limit=250)
+            caption = ""
+            if index < len(lines) and lines[index].strip().startswith("*Figure"):
+                caption = lines[index].strip().strip("*")
+                index += 1
+            tall = any("code_" in p for p in paths)
+            render_figures(pdf, paths, caption, height_limit=250 if tall else 62)
         else:
             pending.append(line)
     flush()
