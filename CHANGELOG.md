@@ -430,3 +430,46 @@ The block numbers were first probed in a separate script, then matched exactly b
 final run had no errors (32 cells). The figure was checked by eye twice; the second check found the
 legend overlapping the title, so it was moved inside the plot and the notebook re-run.
 `tools/assemble.py --no-execute` finds every lab step A0–F3.
+
+## 2026-10-05 16:20 EEST: README, report (Markdown, Word, PDF) and full run of the hand-in notebook
+
+**What**
+- `README.md`: rewritten. It covers what the lab does, the dataset and where to get it, setup, how
+  to run (with the measured run time), Colab notes, and how the code is organised.
+- `report/Lab4_2_Report.md`: created. This is the 2–3 page report as readable Markdown, with the
+  lab's five headings, four tables, three figures, and a code appendix showing `greedy_attack`. The
+  "Who did what" line is a placeholder to fill in.
+- `report/build_report.py`, `report/build_docx.py`: adapted from Lab 4.1. They read plain Markdown
+  images followed by "*Figure ...*" captions, render the code screenshot from the hand-in notebook,
+  and use this lab's title.
+- `report/Lab4_2_Report.pdf` (3 pages + appendix), `report/Lab4_2_Report.docx` (Group 6 title page),
+  `report/figures/code_greedy_attack.png`: built.
+- `tools/check_report_numbers.py`: created. It checks 72 report numbers against `results/tables/`
+  and 8 against the printed output of the hand-in notebook.
+- `lab4_2_robustness_attacks.ipynb`: assembled and executed from scratch (all models retrained).
+- `models/*.joblib`: retrained by that run. The previous copies were moved to
+  `/tmp/lab42_models_backup` (outside the project), not deleted.
+- Part notebooks re-run with the new models; `results/` rewritten by both runs.
+- Written findings in the notebooks, the report and `TASKLIST.md` updated to the hand-in run's
+  logistic regression numbers.
+- `TASKLIST.md`: T5 and T6 ticked; T7 partly done.
+
+**Why**
+The user asked for the README, the report as Markdown and Word, one full run of the hand-in notebook,
+and any other changes needed. The Markdown report holds real numbers, so that it is readable on its
+own; the checker replaces the token system Lab 4.1 used. A PDF was built too because Canvas wants the
+report as PDF. No report file mentions the task list or its IDs (checked with grep, including the
+Word XML).
+
+**Verified**
+- The first full run was killed when the Claude Code session ended (07:46, while training the
+  forest). The second run, started detached with nohup, finished without errors in 3,666 s.
+- The tree, forest, attack, SHAP and LIME results reproduced exactly. Logistic regression changed
+  slightly (macro-F1 0.9417 → 0.9416, recall 0.8326 → 0.8320), probably because the VM went from 4 to
+  8 cores between runs. All text quoting it was updated.
+- `tools/check_report_numbers.py` passes (80 of 80). All part notebooks re-ran without errors or
+  warnings (14:21–14:49).
+- The PDF pages were checked by eye. After that check, the deletion-test figure got its own row
+  (replacing a table that repeated it), "Figure 2, left" was corrected, and "three times" became
+  "almost four times" to match the corrected ROC-AUC spread (0.008).
+- The user committed all of this as 8fd9b3b ("Almost finished"); this entry comes after that commit.
