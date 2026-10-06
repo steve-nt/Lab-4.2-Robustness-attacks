@@ -12,8 +12,7 @@ whether SHAP and LIME explanations are stable and faithful.
 
 - **Notebook to hand in:** `lab4_2_robustness_attacks.ipynb`. It runs from top to bottom and holds
   lab steps A0–F3 in order (A0 is the setup), plus a few extra checks at the end.
-- **Report:** `report/Lab4_2_Report.md`, also as `report/Lab4_2_Report.docx` (Word, with our title
-  page) and `report/Lab4_2_Report.pdf`, both built from the Markdown file.
+- **Report:** Lab 4.2 _Robustness_Attacks_and_Honest_Explanations.pdf
 
 ## Dataset
 
@@ -47,9 +46,7 @@ Run every command from the repository root, with the environment active.
 |---|---|---|
 | Run the hand-in notebook, top to bottom | `jupyter nbconvert --to notebook --execute --inplace lab4_2_robustness_attacks.ipynb` (or *Run All* in Jupyter) | about 61 min (first run) |
 | Rebuild the hand-in notebook from the part notebooks, and run it | `python tools/assemble.py --strict` | about 61 min (first run) |
-| Build the report as Word and PDF | `python report/build_docx.py` and `python report/build_report.py` | seconds |
 | Check that the report's numbers match the last run | `python tools/check_report_numbers.py` | seconds |
-| Rebuild the feature glossary | `python tools/feature_glossary.py` | 1 min |
 
 **Run time.** The first run trains four models and saves them in `models/` (not in git). Later runs
 load them. A full run from scratch (all models retrained) took about 61 minutes (3,666 s) on an 8-core machine with 9 GB RAM. With the models already saved it should take roughly half an hour (estimated from the run times of the part notebooks, not measured as one run). The slowest parts are
@@ -79,6 +76,4 @@ notebooks, puts them in lab order, drops the stand-ins, and writes and runs the 
 | `tools/check_report_numbers.py` | Compares the numbers in the report with the CSV files of the last run |
 | `lab1_pipeline/` | Lab 1's loading, cleaning and splitting code (reference; rebuilds `clean.csv`) |
 | `results/tables/`, `results/figures/` | Every table and figure, named after the lab step that made it |
-| `report/` | The report (Markdown, Word, PDF), its build scripts, title page template and fonts |
 | `models/` | Saved models (created by the first run, not in git) |
-| `CHANGELOG.md` | History of all changes |
