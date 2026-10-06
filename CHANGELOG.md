@@ -492,3 +492,29 @@ still a placeholder: the user stopped my edit that would have filled it in, so i
 Measured: `git archive` zip 3.9 MB (74 committed files); `clean.csv` zipped 50 MB; zip with the
 dataset 53.6 MB. All three zip commands were run in a temporary folder and worked. The only warning
 was that the checklist itself is not committed yet.
+
+## 2026-10-07 00:25 EEST: Reference list with where each reference applies
+
+**What**
+- `report/References.md`: created. It covers 16 references (lab material, CICIDS2017 paper and page,
+  SHAP, TreeSHAP, LIME, random forests, gradient boosting, scikit-learn, CICIDS2017 flaws, PR-AUC on
+  imbalanced data, ML pitfalls in security, adversarial ML, realistic NIDS attacks, SHAP with
+  correlated features, and Claude). For each one it gives what the work is, which lab steps it
+  applies to, which sentence of the report it supports, and how sure we are of the citation details.
+  It also includes a table mapping report sections to references.
+
+**Why**
+The user asked where each suggested reference applies and wanted the list in a separate file. The
+report itself is unchanged; the file suggests placing the references on the appendix page so the
+report stays at 3 pages.
+
+**Verified**
+Checked by web search on 2026-10-07:
+- Engelen et al. is in IEEE SPW 2021, pp. 7–12.
+- Aas et al. is in Artificial Intelligence 298 (2021), article 103502.
+- Apruzzese et al. has the right authors and journal, but sources disagree on the year (2021 vs
+  2022). The file cites it by its arXiv number (2106.09380) and marks the volume and year as still
+  to confirm.
+
+I first suggested "2022, 3(3)" for Apruzzese et al. in chat; that was not confirmed and is not used.
+The file contains no task-list references (checked with grep).
